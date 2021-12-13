@@ -10,10 +10,6 @@ module.exports = {
       name: 'Linkedin',
       url: 'https://www.linkedin.com/in/wmaucla',
     },
-    {
-      name: 'Bitbucket',
-      url: 'https://www.linkedin.com/in/wmaucla',
-    },
   ],
 
   navLinks: [

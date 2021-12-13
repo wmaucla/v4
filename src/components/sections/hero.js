@@ -59,8 +59,9 @@ const Hero = () => {
   }, []);
 
   const one = <h1>Hi, my name is</h1>;
-  const two = <h2 className="big-heading">William Ma.</h2>;
-  const three = (
+  const two = <h2 className="big-heading">Zhengwei (William) Ma.</h2>;
+  const three = <h3 className="big-heading">Senior MLE</h3>;
+  const four = (
     <>
       <p>
         Hello there! I'm excited about all things ML and engineering and am glad you're here. Please
@@ -68,7 +69,7 @@ const Hero = () => {
       </p>
     </>
   );
-  const four = (
+  const five = (
     <a
       className="email-link"
       href="https://www.linkedin.com/in/williammaucla/"
@@ -78,7 +79,7 @@ const Hero = () => {
     </a>
   );
 
-  const items = [one, two, three, four];
+  const items = [one, two, three, four, five];
 
   return (
     <StyledHeroSection>
