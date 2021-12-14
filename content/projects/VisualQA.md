@@ -2,6 +2,7 @@
 date: '2020-03-14'
 title: 'Visual QA'
 github: 'https://github.com/wmaucla/visual-qa'
+external: ''
 tech:
   - ML
   - QA

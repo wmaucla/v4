@@ -2,6 +2,7 @@
 date: '2021-10-06'
 title: 'MLOps Optimization'
 github: 'https://github.com/wmaucla/mlops_optimization'
+external: ''
 tech:
   - MLOps
 company:
