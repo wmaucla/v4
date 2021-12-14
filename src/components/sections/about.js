@@ -134,12 +134,12 @@ const About = () => {
         <StyledText>
           <div>
             <p>
-              My experience is varied and my interests even more so. I have expertise in project
+              My experience is varied and my interests even more so. I have worked on project
               management, MLOps, Deep Learning, Machine Learning, and backend engineering. I'm also
               trying to get more frontend experience with this React app!
             </p>
             <p>
-              When I'm not working I love to travel (its not a photoshopped photo!) and enjoy
+              When I'm not working or tinkering I love to travel (its not a photoshopped photo!) and enjoy
               hiking. And of course, I live near the best city - NYC!
             </p>
             <p>Here are some of the technologies I’ve been working with recently:</p>
