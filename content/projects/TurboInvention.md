@@ -7,8 +7,7 @@ tech:
   - ML
   - Question/Answer
   - MLOps
-company:
 showInProjects: true
 ---
 
-Turbo Invention was an end-to-end experiment to see how you could deploy a NLP model on a AWS Lambda
+An experiment to see how you could deploy a NLP model on a AWS Lambda

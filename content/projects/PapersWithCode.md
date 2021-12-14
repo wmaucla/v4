@@ -6,7 +6,6 @@ external: 'https://paperswithcode.com/'
 tech:
   - ML
   - Research
-company:
 showInProjects: false
 ---
 

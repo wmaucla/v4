@@ -2,7 +2,6 @@
 date: '2021-12-11'
 title: 'MLE Interview Prep'
 github: 'https://gitlab.com/wmaucla/interview-prep'
-external: ''
 tech:
   - MLE
   - Interviews

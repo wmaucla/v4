@@ -9,4 +9,4 @@ company:
 showInProjects: true
 ---
 
-Dread it, run from it, you won't be able to get away - it's my LC prep :(
+Dread it, run from it, it's my LC prep :(

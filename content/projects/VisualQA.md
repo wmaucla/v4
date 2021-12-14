@@ -5,7 +5,6 @@ github: 'https://github.com/wmaucla/visual-qa'
 tech:
   - ML
   - QA
-company:
 showInProjects: true
 ---
 

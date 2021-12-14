@@ -5,7 +5,6 @@ github: 'https://bitbucket.org/wmaucla/ds_workflow_resume/src/master/'
 external: 'https://wmaucla.bitbucket.io'
 tech:
   - MLOps
-company:
 showInProjects: true
 ---
 
