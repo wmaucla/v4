@@ -64,8 +64,7 @@ const Hero = () => {
   const four = (
     <>
       <p>
-        Hello there! I'm excited about all things ML and engineering and am glad you're here. Please
-        take a look at my expertise below!
+        I'm excited about all things ML and engineering. Thanks for taking a look at my profile!
       </p>
     </>
   );
