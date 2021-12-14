@@ -4,6 +4,7 @@ import {
   IconAppStore,
   IconBookmark,
   IconCodepen,
+  IconEmail,
   IconExternal,
   IconFolder,
   IconFork,
@@ -15,6 +16,7 @@ import {
   IconPlayStore,
   IconStar,
   IconTwitter,
+  IconZotero,
 } from '@components/icons';
 
 const Icon = ({ name }) => {
@@ -35,6 +37,10 @@ const Icon = ({ name }) => {
       return <IconGitHub />;
     case 'Instagram':
       return <IconInstagram />;
+    case 'Email':
+      return <IconEmail />;
+    case 'Zotero':
+      return <IconZotero />;
     case 'Linkedin':
       return <IconLinkedin />;
     case 'Loader':
