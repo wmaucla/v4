@@ -133,6 +133,9 @@ const About = () => {
       <div className="inner">
         <StyledText>
           <div>
+            <p> 
+              I currently live and work remotely near NYC.
+            </p>
             <p>
               My experience is varied and my interests even more so. I have worked on project
               management, MLOps, Deep Learning, Machine Learning, and backend engineering. I'm also
@@ -140,7 +143,7 @@ const About = () => {
             </p>
             <p>
               When I'm not working or tinkering I love to travel (its not a photoshopped photo!) and enjoy
-              hiking. And of course, I live near the best city - NYC!
+              hiking.
             </p>
             <p>Here are some of the technologies I’ve been working with recently:</p>
           </div>

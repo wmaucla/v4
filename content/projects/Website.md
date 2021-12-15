@@ -8,4 +8,4 @@ tech:
 showInProjects: true
 ---
 
-Of course, can't forget my website! I wanted to switch from my old website to a React-based version
+This website definitely counts as project! I wanted to switch from my old website to a React-based version

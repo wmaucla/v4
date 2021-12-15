@@ -8,4 +8,4 @@ tech:
 showInProjects: true
 ---
 
-Streamlit app for paper Simulation of Isotropic Random Fields
+Streamlit app for paper [Simulation of Isotropic Random Fields](https://www.ams.org/journals/tpms/2021-105-00/S0094-9000-2021-01158-9/)
