@@ -133,17 +133,15 @@ const About = () => {
       <div className="inner">
         <StyledText>
           <div>
-            <p> 
-              I currently live and work remotely near NYC.
-            </p>
+            <p>I currently live and work remotely near NYC.</p>
             <p>
               My experience is varied and my interests even more so. I have worked on project
               management, MLOps, Deep Learning, Machine Learning, and backend engineering. I'm also
               trying to get more frontend experience with this React app!
             </p>
             <p>
-              When I'm not working or tinkering I love to travel (its not a photoshopped photo!) and enjoy
-              hiking.
+              When I'm not working or tinkering I love to travel (its not a photoshopped photo!) and
+              enjoy hiking.
             </p>
             <p>Here are some of the technologies I’ve been working with recently:</p>
           </div>
@@ -156,7 +154,7 @@ const About = () => {
           <div className="wrapper">
             <StaticImage
               className="img"
-              src="../../images/me.jpg"
+              src="../../images/me_photo.jpg"
               width={500}
               quality={95}
               formats={['AUTO', 'WEBP', 'AVIF']}
