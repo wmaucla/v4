@@ -24,7 +24,7 @@ const StyledProjectsSection = styled.section`
     }
   }
 
-  .projects-grid {
+  .readings-grid {
     ${({ theme }) => theme.mixins.resetList};
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -47,6 +47,7 @@ const StyledProject = styled.li`
   position: relative;
   cursor: default;
   transition: var(--transition);
+  transition-delay: 1s;
 
   @media (prefers-reduced-motion: no-preference) {
     &:hover,
@@ -274,15 +275,7 @@ const Readings = () => {
 
       <p> Readings are fetched automatically from my Zotero library </p>
       
-      <ul className="projects-grid">
-      {prefersReducedMotion ? (
-          <>
-            {projectsToShow &&
-              projectsToShow.map(({ node }, i) => (
-                <StyledProject key={i}>{projectInner(node)}</StyledProject>
-              ))}
-          </>
-        ) : (
+      <ul className="readings-grid">
           <TransitionGroup component={null}>
             {apiData &&
               apiData.map((item, i) => (
@@ -302,7 +295,6 @@ const Readings = () => {
                 </CSSTransition>
               ))}
           </TransitionGroup>
-        )}
       </ul>  
 
     </StyledProjectsSection>
