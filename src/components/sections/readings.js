@@ -195,16 +195,17 @@ const Readings = () => {
   const revealProjects = useRef([]);
   const prefersReducedMotion = usePrefersReducedMotion();
   const [apiData, setAPIData] = useState([]);
-
-
+  
   useEffect(() => {
     if (prefersReducedMotion) {
       return;
     }
+
+    console.log(process.env.REACT_APP_API_KEY, "Adsfasdfasdfasdfa")
     const requestOptions = {
       method: 'GET',
       headers: { 'Content-Type': 'application/json', 
-        'Zotero-API-Key': '2oNU6UszYNi05mZFH4I6rzzQ'
+        'Zotero-API-Key': process.env.REACT_APP_API_KEY  // yes this is very bad
       }
     };
     fetch('https://api.zotero.org/groups/2583428/items?limit=6', requestOptions)
@@ -270,6 +271,8 @@ const Readings = () => {
         view the archive
       </Link>
       */}
+
+      <p> Readings are fetched automatically from my Zotero library </p>
       
       <ul className="projects-grid">
       {prefersReducedMotion ? (
