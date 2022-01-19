@@ -273,7 +273,7 @@ const Readings = () => {
       </Link>
       */}
 
-      <p> Readings are fetched automatically from my Zotero library </p>
+      <p> Readings are fetched automatically from <a href="https://www.zotero.org/groups/2583428/williams_reading_list/library"> my Zotero library. </a></p>
       
       <ul className="readings-grid">
           <TransitionGroup component={null}>
