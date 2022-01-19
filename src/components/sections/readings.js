@@ -164,6 +164,7 @@ const StyledProject = styled.li`
   }
 `;
 
+
 const Readings = () => {
   const data = useStaticQuery(graphql`
     query {
@@ -201,11 +202,10 @@ const Readings = () => {
       return;
     }
 
-    console.log(process.env.REACT_APP_API_KEY, "Adsfasdfasdfasdfa")
     const requestOptions = {
       method: 'GET',
       headers: { 'Content-Type': 'application/json', 
-        'Zotero-API-Key': process.env.REACT_APP_API_KEY  // yes this is very bad
+        'Zotero-API-Key': process.env.GATSBY_API_KEY  // yes this is very bad
       }
     };
     fetch('https://api.zotero.org/groups/2583428/items?limit=6', requestOptions)
