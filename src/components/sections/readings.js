@@ -24,7 +24,7 @@ const StyledProjectsSection = styled.section`
     }
   }
 
-  .readings-grid {
+  .projects-grid {
     ${({ theme }) => theme.mixins.resetList};
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -63,7 +63,7 @@ const StyledProject = styled.li`
     z-index: 1;
   }
 
-  .project-inner {
+  .readings-inner {
     ${({ theme }) => theme.mixins.boxShadow};
     ${({ theme }) => theme.mixins.flexBetween};
     flex-direction: column;
@@ -76,7 +76,7 @@ const StyledProject = styled.li`
     transition: var(--transition);
   }
 
-  .project-top {
+  .readings-top {
     ${({ theme }) => theme.mixins.flexBetween};
     margin-bottom: 35px;
 
@@ -88,7 +88,7 @@ const StyledProject = styled.li`
       }
     }
 
-    .project-links {
+    .readings-links {
       display: flex;
       align-items: center;
       margin-right: -10px;
@@ -114,7 +114,7 @@ const StyledProject = styled.li`
     }
   }
 
-  .project-title {
+  .readings-title {
     margin: 0 0 10px;
     color: var(--lightest-slate);
     font-size: var(--fz-xxl);
@@ -135,7 +135,7 @@ const StyledProject = styled.li`
     }
   }
 
-  .project-description {
+  .readings-description {
     color: var(--light-slate);
     font-size: 17px;
 
@@ -144,7 +144,7 @@ const StyledProject = styled.li`
     }
   }
 
-  .project-tech-list {
+  .readings-tech-list {
     display: flex;
     align-items: flex-end;
     flex-grow: 1;
@@ -232,13 +232,13 @@ const Readings = () => {
     const { title, url, abstractNote } = node;
 
     return (
-      <div className="project-inner">
+      <div className="readings-inner">
         <header>
-          <div className="project-top">
+          <div className="readings-top">
             <div className="folder">
               <Icon name="Folder" />
             </div>
-            <div className="project-links">
+            <div className="readings-links">
               {title && (
                 <a
                   href={url}
@@ -252,13 +252,13 @@ const Readings = () => {
             </div>
           </div>
 
-          <h3 className="project-title">
+          <h3 className="readings-title">
             <a target="_blank" rel="noreferrer">
               {title}
             </a>
           </h3>
 
-          <div className="project-description" dangerouslySetInnerHTML={{ __html: abstractNote }} />
+          <div className="readings-description" dangerouslySetInnerHTML={{ __html: abstractNote }} />
         </header>
       </div>
     );
@@ -275,7 +275,7 @@ const Readings = () => {
 
       <p> Readings are fetched automatically from <a href="https://www.zotero.org/groups/2583428/williams_reading_list/library"> my Zotero library. </a></p>
       
-      <ul className="readings-grid">
+      <ul className="projects-grid">
           <TransitionGroup component={null}>
             {apiData &&
               apiData.map((item, i) => (
@@ -288,7 +288,7 @@ const Readings = () => {
                     key={i}
                     ref={el => (revealProjects.current[i] = el)}
                     style={{
-                      transitionDelay: `${i >= GRID_LIMIT ? (i - GRID_LIMIT) * 100 : 0}ms`,
+                      transition: `all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1) 0s;`,
                     }}>
                     {projectInner(item.data)}
                   </StyledProject>
