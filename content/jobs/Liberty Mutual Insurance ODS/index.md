@@ -3,7 +3,7 @@ date: '2020-12-21'
 title: 'Senior Data Scientist'
 company: 'Liberty Mutual Insurance'
 location: 'Remote'
-range: 'June 2020 - Jan 2021'
+range: 'June 2020 - Jan 2022'
 ---
 
 I worked for the Office of Data Science, a center of DS excellence for the enterprise.
