@@ -32,7 +32,7 @@ const StyledHeroSection = styled.section`
     margin-top: 10px;
     color: var(--slate);
     line-height: 0.9;
-    font-size: clamp(40px,8vw,0px);
+    font-size: clamp(40px, 8vw, 0px);
   }
 
   p {
@@ -41,6 +41,10 @@ const StyledHeroSection = styled.section`
   }
 
   .email-link {
+    ${({ theme }) => theme.mixins.bigButton};
+    margin-top: 10px;
+  }
+  .github-link {
     ${({ theme }) => theme.mixins.bigButton};
     margin-top: 50px;
   }
@@ -65,11 +69,17 @@ const Hero = () => {
   const four = (
     <>
       <p>
-        I'm excited about all things machine learning and engineering. Thanks for taking a look at my profile!
+        I'm excited about all things machine learning and engineering. Thanks for taking a look at
+        my profile!
       </p>
     </>
   );
   const five = (
+    <a className="github-link" href="https://github.com/wmaucla" target="_blank" rel="noreferrer">
+      Check out my Github!
+    </a>
+  );
+  const six = (
     <a
       className="email-link"
       href="https://www.linkedin.com/in/williammaucla/"
@@ -79,7 +89,7 @@ const Hero = () => {
     </a>
   );
 
-  const items = [one, two, three, four, five];
+  const items = [one, two, three, four, five, six];
 
   return (
     <StyledHeroSection>
