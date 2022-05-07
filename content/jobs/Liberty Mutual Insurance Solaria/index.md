@@ -1,7 +1,7 @@
 ---
 date: '2017-12-21'
 title: 'Senior Data Scientist'
-company: 'Solaria Labs'
+company: 'Solaria Labs - Liberty Mutual'
 location: 'Boston'
 range: 'Nov 2017 - Jul 2019'
 ---
