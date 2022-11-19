@@ -124,7 +124,7 @@ const About = () => {
     sr.reveal(revealContainer.current, srConfig());
   }, []);
 
-  const skills = ['FastAPI', 'Docker', 'CICD', 'K8s'];
+  const skills = ['FastAPI', 'Docker', 'Kafka', 'K8s'];
 
   return (
     <StyledAboutSection id="about" ref={revealContainer}>
@@ -146,7 +146,7 @@ const About = () => {
             <p>Here are some of the technologies I’ve been working with recently:</p>
           </div>
 
-          <ul className="skills-list">
+          <ul className="About Me-list">
             {skills && skills.map((skill, i) => <li key={i}>{skill}</li>)}
           </ul>
         </StyledText>
