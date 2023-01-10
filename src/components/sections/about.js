@@ -124,7 +124,7 @@ const About = () => {
     sr.reveal(revealContainer.current, srConfig());
   }, []);
 
-  const skills = ['FastAPI', 'Docker', 'Kafka', 'K8s'];
+  const skills = ['Kubernetes', 'Kafka', 'CICD', 'Terraform'];
 
   return (
     <StyledAboutSection id="about" ref={revealContainer}>
@@ -135,13 +135,13 @@ const About = () => {
           <div>
             <p>I currently live and work remotely near NYC.</p>
             <p>
-              My experience is varied and my interests even more so. I have worked on project
-              management, MLOps, Deep Learning, Machine Learning, and backend engineering. I'm also
-              trying to get more frontend experience with this React app!
+              My experience is varied and my interests even more so. I have skills in project
+              management, MLOps, Deep Learning, Machine Learning, DevOps, and backend engineering.
+              I'm also trying to get more frontend experience with this React app!
             </p>
             <p>
               When I'm not working or tinkering I love to travel (its not a photoshopped photo!) and
-              enjoy hiking.
+              trying out new things.
             </p>
             <p>Here are some of the technologies I’ve been working with recently:</p>
           </div>
