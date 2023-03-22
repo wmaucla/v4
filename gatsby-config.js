@@ -6,7 +6,7 @@ module.exports = {
     description: 'Profile based on Brittany Chiang template.',
     siteUrl: 'https://wmaucla.github.io/', // No trailing slash allowed!
     image: '/og.png', // Path to your image you placed in the 'static' folder
-    twitterUsername: '@bchiang7',
+    twitterUsername: '',
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
