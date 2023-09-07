@@ -59,37 +59,44 @@ const Contact = () => {
 
   const [audio, setAudio] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  const loadAudio = async () => {
-    const importRes = await import('./wedding.mp3'); // make sure the path is correct
-    const audioElement = new Audio(importRes.default);
-    audioElement.addEventListener('ended', () => {
-      setIsPlaying(false);
-    });
-    setAudio(audioElement);
-  };
+  useEffect(() => {
+    // Load the audio file when the component mounts
+    const loadAudio = async () => {
+      const importRes = await import('./wedding.mp3'); // make sure the path is correct
+      const audioElement = new Audio(importRes.default);
+      audioElement.addEventListener('canplaythrough', () => {
+        setIsLoaded(true);
+      });
+      audioElement.addEventListener('ended', () => {
+        setIsPlaying(false);
+      });
+      setAudio(audioElement);
+    };
+
+    loadAudio();
+  }, []);
 
   const playAudio = async () => {
-    if (!audio) {
-      await loadAudio();
-    }
-
-    try {
-      if (isPlaying) {
-        audio.pause();
-      } else {
-        await audio.play();
+    if (audio && isLoaded) {
+      try {
+        if (isPlaying) {
+          audio.pause();
+        } else {
+          await audio.play();
+        }
+        setIsPlaying(!isPlaying);
+      } catch (err) {
+        /* eslint-disable no-console */
+        console.log(`Failed to play, error: ${err}`);
+        /* eslint-enable no-console */
       }
-      setIsPlaying(!isPlaying);
-    } catch (err) {
-      /* eslint-disable no-console */
-      console.log(`Failed to play, error: ${err}`);
-      /* eslint-enable no-console */
     }
   };
 
   const resetAudio = () => {
-    if (audio) {
+    if (audio && isLoaded) {
       audio.pause();
       audio.currentTime = 0; // Reset audio to the beginning
       setIsPlaying(false);
@@ -112,7 +119,7 @@ const Contact = () => {
       <br></br>
       Here's something fun I'm whipping up for my wedding!
       <br></br>
-      <button className="button-click" onClick={playAudio}>
+      <button className="button-click" onClick={playAudio} disabled={!isLoaded}>
         {isPlaying ? 'Pause Audio' : 'Play Audio'}
       </button>
       <button className="button-click" onClick={resetAudio}>
