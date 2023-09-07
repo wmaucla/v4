@@ -60,21 +60,25 @@ const Contact = () => {
   const [audio, setAudio] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  const loadAudio = async () => {
+    const importRes = await import('./wedding.mp3'); // make sure the path is correct
+    const audioElement = new Audio(importRes.default);
+    audioElement.addEventListener('ended', () => {
+      setIsPlaying(false);
+    });
+    setAudio(audioElement);
+  };
+
   const playAudio = async () => {
     if (!audio) {
-      const importRes = await import('./wedding.mp3'); // make sure the path is correct
-      const audioElement = new Audio(importRes.default);
-      setAudio(audioElement);
-      audioElement.addEventListener('ended', () => {
-        setIsPlaying(false);
-      });
+      await loadAudio();
     }
 
     try {
       if (isPlaying) {
         audio.pause();
       } else {
-        audio.play();
+        await audio.play();
       }
       setIsPlaying(!isPlaying);
     } catch (err) {
@@ -84,23 +88,35 @@ const Contact = () => {
     }
   };
 
+  const resetAudio = () => {
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0; // Reset audio to the beginning
+      setIsPlaying(false);
+    }
+  };
+
   return (
     <StyledContactSection id="contact" ref={revealContainer}>
       <h2 className="numbered-heading overline">What’s Next?</h2>
-
       <h2 className="title">Get In Touch</h2>
-
       <p>
         Although I’m not currently looking for any new opportunities, my inbox is always open. Or if
         you just want to chat, you deserve the chance - after all, you've made it all the way!
       </p>
-
       <a className="email-link" href={`mailto:${email}`}>
         Say Hello
       </a>
-
+      <br></br>
+      <br></br>
+      <br></br>
+      Here's something fun I'm whipping up for my wedding!
+      <br></br>
       <button className="button-click" onClick={playAudio}>
         {isPlaying ? 'Pause Audio' : 'Play Audio'}
+      </button>
+      <button className="button-click" onClick={resetAudio}>
+        Reset Audio
       </button>
     </StyledContactSection>
   );
