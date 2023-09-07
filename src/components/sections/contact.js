@@ -59,48 +59,71 @@ const Contact = () => {
 
   const [audio, setAudio] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  const playAudio = async () => {
-    if (!audio) {
+  useEffect(() => {
+    // Load the audio file when the component mounts
+    const loadAudio = async () => {
       const importRes = await import('./wedding.mp3'); // make sure the path is correct
       const audioElement = new Audio(importRes.default);
-      setAudio(audioElement);
+      audioElement.addEventListener('canplaythrough', () => {
+        setIsLoaded(true);
+      });
       audioElement.addEventListener('ended', () => {
         setIsPlaying(false);
       });
-    }
+      setAudio(audioElement);
+    };
 
-    try {
-      if (isPlaying) {
-        audio.pause();
-      } else {
-        audio.play();
+    loadAudio();
+  }, []);
+
+  const playAudio = async () => {
+    if (audio && isLoaded) {
+      try {
+        if (isPlaying) {
+          audio.pause();
+        } else {
+          await audio.play();
+        }
+        setIsPlaying(!isPlaying);
+      } catch (err) {
+        /* eslint-disable no-console */
+        console.log(`Failed to play, error: ${err}`);
+        /* eslint-enable no-console */
       }
-      setIsPlaying(!isPlaying);
-    } catch (err) {
-      /* eslint-disable no-console */
-      console.log(`Failed to play, error: ${err}`);
-      /* eslint-enable no-console */
+    }
+  };
+
+  const resetAudio = () => {
+    if (audio && isLoaded) {
+      audio.pause();
+      audio.currentTime = 0; // Reset audio to the beginning
+      setIsPlaying(false);
     }
   };
 
   return (
     <StyledContactSection id="contact" ref={revealContainer}>
       <h2 className="numbered-heading overline">What’s Next?</h2>
-
       <h2 className="title">Get In Touch</h2>
-
       <p>
         Although I’m not currently looking for any new opportunities, my inbox is always open. Or if
         you just want to chat, you deserve the chance - after all, you've made it all the way!
       </p>
-
       <a className="email-link" href={`mailto:${email}`}>
         Say Hello
       </a>
-
-      <button className="button-click" onClick={playAudio}>
+      <br></br>
+      <br></br>
+      <br></br>
+      Here's something fun I'm whipping up for my wedding!
+      <br></br>
+      <button className="button-click" onClick={playAudio} disabled={!isLoaded}>
         {isPlaying ? 'Pause Audio' : 'Play Audio'}
+      </button>
+      <button className="button-click" onClick={resetAudio}>
+        Reset Audio
       </button>
     </StyledContactSection>
   );
