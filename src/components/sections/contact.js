@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { srConfig, email } from '@config';
 import sr from '@utils/sr';
@@ -57,14 +57,29 @@ const Contact = () => {
     sr.reveal(revealContainer.current, srConfig());
   }, []);
 
+  const [audio, setAudio] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
   const playAudio = async () => {
-    const importRes = await import('./wedding.mp3'); // make sure the path is correct
-    const audio = new Audio(importRes.default);
+    if (!audio) {
+      const importRes = await import('./wedding.mp3'); // make sure the path is correct
+      const audioElement = new Audio(importRes.default);
+      setAudio(audioElement);
+      audioElement.addEventListener('ended', () => {
+        setIsPlaying(false);
+      });
+    }
+
     try {
-      await audio.play();
+      if (isPlaying) {
+        audio.pause();
+      } else {
+        audio.play();
+      }
+      setIsPlaying(!isPlaying);
     } catch (err) {
       /* eslint-disable no-console */
-      console.log(`Failed to play, error: ${  err}`);
+      console.log(`Failed to play, error: ${err}`);
       /* eslint-enable no-console */
     }
   };
@@ -85,7 +100,7 @@ const Contact = () => {
       </a>
 
       <button className="button-click" onClick={playAudio}>
-        Play Audio
+        {isPlaying ? 'Pause Audio' : 'Play Audio'}
       </button>
     </StyledContactSection>
   );
