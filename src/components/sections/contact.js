@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { srConfig, email } from '@config';
 import sr from '@utils/sr';
@@ -57,52 +57,6 @@ const Contact = () => {
     sr.reveal(revealContainer.current, srConfig());
   }, []);
 
-  const [audio, setAudio] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    // Load the audio file when the component mounts
-    const loadAudio = async () => {
-      const importRes = await import('./wedding.mp3'); // make sure the path is correct
-      const audioElement = new Audio(importRes.default);
-      audioElement.addEventListener('canplaythrough', () => {
-        setIsLoaded(true);
-      });
-      audioElement.addEventListener('ended', () => {
-        setIsPlaying(false);
-      });
-      setAudio(audioElement);
-    };
-
-    loadAudio();
-  }, []);
-
-  const playAudio = async () => {
-    if (audio && isLoaded) {
-      try {
-        if (isPlaying) {
-          audio.pause();
-        } else {
-          await audio.play();
-        }
-        setIsPlaying(!isPlaying);
-      } catch (err) {
-        /* eslint-disable no-console */
-        console.log(`Failed to play, error: ${err}`);
-        /* eslint-enable no-console */
-      }
-    }
-  };
-
-  const resetAudio = () => {
-    if (audio && isLoaded) {
-      audio.pause();
-      audio.currentTime = 0; // Reset audio to the beginning
-      setIsPlaying(false);
-    }
-  };
-
   return (
     <StyledContactSection id="contact" ref={revealContainer}>
       <h2 className="numbered-heading overline">What’s Next?</h2>
@@ -117,14 +71,6 @@ const Contact = () => {
       <br></br>
       <br></br>
       <br></br>
-      Here's something fun I'm whipping up for my wedding!
-      <br></br>
-      <button className="button-click" onClick={playAudio} disabled={!isLoaded}>
-        {isPlaying ? 'Pause Audio' : 'Play Audio'}
-      </button>
-      <button className="button-click" onClick={resetAudio}>
-        Reset Audio
-      </button>
     </StyledContactSection>
   );
 };
