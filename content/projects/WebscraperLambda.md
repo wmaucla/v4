@@ -7,4 +7,4 @@ tech:
 showInProjects: true
 ---
 
-This was a webscraper I built with selenium and beautifulsoup; it is designed to look for certain apartments in my apartment hunting. Deployed as a lambda with SES as a cron job.
+This was a webscraper I built with selenium and beautifulsoup; it is designed to look for certain apartments in my apartment hunting. Deployed as a lambda with SES as a cron job. There's a fun story I can share about this!

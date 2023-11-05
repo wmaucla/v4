@@ -62,11 +62,11 @@ const Contact = () => {
       <h2 className="numbered-heading overline">What’s Next?</h2>
       <h2 className="title">Get In Touch</h2>
       <p>
-        Although I’m not currently looking for any new opportunities, my inbox is always open. Or if
-        you just want to chat, you deserve the chance - after all, you've made it all the way!
+        Please reach out if you're interested in my work! Or if you just want to chat, you deserve
+        the chance - after all, you've made it all the way!
       </p>
       <a className="email-link" href={`mailto:${email}`}>
-        Say Hello
+        Say Hello!
       </a>
       <br></br>
       <br></br>
