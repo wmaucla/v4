@@ -1,5 +1,5 @@
 ---
-date: '2023-11-05'
+date: '2023-12-31'
 title: 'MLOps K8s Deployment Platform'
 github: 'https://github.com/wmaucla/mlops-kubernetes'
 external: ''
