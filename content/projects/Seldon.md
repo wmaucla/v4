@@ -6,7 +6,7 @@ external: ''
 tech:
   - MLOps
 company:
-showInProjects: true
+showInProjects: false
 ---
 
 Various experiments with running seldon locally

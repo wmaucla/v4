@@ -85,7 +85,7 @@ const Hero = () => {
       href="https://www.linkedin.com/in/williammaucla/"
       target="_blank"
       rel="noreferrer">
-      Check out my LinkedIn!
+      Connect on my LinkedIn!
     </a>
   );
 
