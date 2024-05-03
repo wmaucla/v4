@@ -9,3 +9,7 @@ package-lock.json
 .DS_Store
 
 .vscode/
+
+# Hide resume
+content/resume/
+content/jobs/*/hidden.md
