@@ -2,6 +2,7 @@
 date: '2020-12-21'
 title: 'Senior Data Scientist'
 company: 'Liberty Mutual Insurance'
+url: 'https://www.libertymutual.com/'
 location: 'Remote'
 range: 'June 2020 - Jan 2022'
 ---

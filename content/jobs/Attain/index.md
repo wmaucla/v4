@@ -2,6 +2,7 @@
 date: '2024-05-20'
 title: 'Staff Machine Learning Engineer'
 company: 'Attain'
+url: 'https://www.attainoutcomes.com/'
 location: 'Remote/New York City'
 range: 'May 2024 - Present'
 ---

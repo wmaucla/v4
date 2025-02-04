@@ -2,6 +2,7 @@
 date: '2019-12-21'
 title: 'Graduate Teaching Fellow'
 company: 'Harvard Extension'
+url: 'https://extension.harvard.edu/'
 location: 'Remote'
 range: 'Aug 2019 - May 2020'
 ---

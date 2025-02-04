@@ -4,6 +4,7 @@ title: 'Senior Data Scientist'
 company: 'Solaria Labs - Liberty Mutual'
 location: 'Boston'
 range: 'Nov 2017 - Jul 2019'
+url: 'https://www.solarialabs.com/'
 ---
 
 I worked for Solaria Labs, the innovation arm of Liberty Mutual.

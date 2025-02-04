@@ -4,6 +4,7 @@ title: 'Senior Data Scientist'
 company: 'Munich Reinsurance'
 location: 'New York City'
 range: 'Aug 2019 - Jun 2020'
+url: 'https://www.munichre.com/us-life/en/capabilities/integrated-analytics.html'
 ---
 
 I worked for Integrated Analytics, focused on innovation in life & disability insurance.
