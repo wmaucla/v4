@@ -2,7 +2,7 @@
 date: '2023-12-31'
 title: 'CNCF Minikube Deployment'
 github: 'https://github.com/wmaucla/cncf-example-k8s'
-external: ''
+external: 'https://github.com/wmaucla/cncf-example-k8s'
 tech:
   - Kubernetes
   - OpenTofu

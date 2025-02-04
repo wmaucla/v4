@@ -124,7 +124,7 @@ const About = () => {
     sr.reveal(revealContainer.current, srConfig());
   }, []);
 
-  const skills = ['Kubernetes', 'Kafka', 'Terraform', 'MLOps'];
+  const skills = ['Kubernetes', 'Terraform', 'Julia', 'Kafka'];
 
   return (
     <StyledAboutSection id="about" ref={revealContainer}>
@@ -137,13 +137,16 @@ const About = () => {
             <p>
               My experience is varied and my interests even more so. I have skills in project
               management, MLOps, Deep Learning, Machine Learning, DevOps, and backend engineering.
-              I'm also trying to get more frontend experience with this React app!
+              I'm also trying to get more frontend experience with my webpage!
             </p>
             <p>
               When I'm not working or tinkering I love to travel (its not a photoshopped photo!) and
-              trying out new things.
+              learn new things.
             </p>
-            <p>Here are some of the technologies I’ve been working with recently:</p>
+            <p>
+              While I'm currently working in the MLE / MLOps domain, here are some of the
+              technologies I’ve been using recently:
+            </p>
           </div>
 
           <ul className="About Me-list">

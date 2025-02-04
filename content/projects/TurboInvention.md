@@ -5,7 +5,7 @@ github: 'https://github.com/wmaucla/turbo-invention'
 external: 'https://go.aws/2Ib891e'
 tech:
   - ML
-  - Question/Answer
+  - GenAI
   - MLOps
 showInProjects: true
 ---
