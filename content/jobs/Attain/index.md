@@ -1,6 +1,6 @@
 ---
 date: '2024-05-20'
-title: 'Staff Machine Learning Engineer'
+title: 'Senior ML Engineering Manager'
 company: 'Attain'
 url: 'https://www.attainoutcomes.com/'
 location: 'Remote/New York City'
@@ -11,7 +11,7 @@ I'm currently at Attain, a fintech/adtech startup as a technical lead for MLOps 
 
 Here are some quick highlights:
 
-- Offshore manager and project manager
+- MLE tech lead
 - Optimized machine learning workflows within a set budget by adjusting batch training and inference strategies to prevent exceeding the allocated spend
 - Introduced GPU-based model training and integrated GPUs into internal GKE clusters to accelerate ML workloads
 - Evaluated self-hosted model APIs versus Vertex AI Endpoints, optimizing for performance and cost efficiency
