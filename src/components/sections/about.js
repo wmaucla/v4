@@ -135,13 +135,17 @@ const About = () => {
           <div>
             <p>I currently live and work remotely near NYC.</p>
             <p>
-              My experience is varied and my interests even more so. I have skills in project
-              management, MLOps, Deep Learning, Machine Learning, DevOps, and backend engineering.
-              I'm also trying to get more frontend experience with my webpage!
+              I’m a machine learning engineering leader focused on building scalable ML platforms
+              and real-time decision systems. My work sits at the intersection of ML research and
+              production infrastructure—turning models and data pipelines into reliable systems that
+              power business-critical products. I’ve led the development of large-scale ML platforms
+              that drive tens of millions in revenue, process hundreds of millions of real-time
+              decisions, and enable teams to deploy and operate machine learning safely in
+              production.
             </p>
             <p>
-              When I'm not working or tinkering I love to travel (its not a photoshopped photo!) and
-              learn new things.
+              When I'm not working or tinkering (check out my github/gitlab stats!) I love to travel
+              (its not a photoshopped photo!) and learn new things.
             </p>
             <p>
               While I'm currently working in the MLE / MLOps domain, here are some of the
