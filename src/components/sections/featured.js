@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
 import styled from 'styled-components';
 import sr from '@utils/sr';
 import { srConfig } from '@config';
@@ -35,34 +34,6 @@ const StyledText = styled.div`
 `;
 
 const Featured = () => {
-  const data = useStaticQuery(graphql`
-    {
-      featured: allMarkdownRemark(
-        filter: { fileAbsolutePath: { regex: "/featured/" } }
-        sort: { fields: [frontmatter___date], order: ASC }
-      ) {
-        edges {
-          node {
-            frontmatter {
-              title
-              cover {
-                childImageSharp {
-                  gatsbyImageData(width: 700, placeholder: BLURRED, formats: [AUTO, WEBP, AVIF])
-                }
-              }
-              tech
-              github
-              external
-              cta
-            }
-            html
-          }
-        }
-      }
-    }
-  `);
-
-  const featuredProjects = data.featured.edges.filter(({ node }) => node);
   const revealTitle = useRef(null);
   const revealProjects = useRef([]);
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -82,17 +53,33 @@ const Featured = () => {
         Projects, Learnings, and Readings
       </h2>
       <StyledText>
-      <div>
-        <p>
-          I studied actuarial mathematics with a minor in statistics and a minor in computer science and graduated from UCLA. All of my experience in ML, data science, and engineering comes from 
-          self-study and my own interest. I am constantly seeking to learn and grow!
-        </p>
-        <p>
-          I have taken many <a href="https://www.linkedin.com/in/williammaucla/"> LinkedIn courses and Coursera courses</a>.  
-          Also check out my <a href="https://www.oreilly.com/playlists/c666e77c-45f7-4275-8678-ce03f0aa1960/"> O'Reilly account </a> for books I am reading and my
-          <a href="https://www.zotero.org/groups/2583428/williams_reading_list/library"> Zotero </a> library for Arxiv papers and other websites I am browsing, and see below for some projects I have worked on.
-        </p>
-      </div>
+        <div>
+          <p>
+            I studied actuarial mathematics with a minor in statistics and a minor in computer
+            science and graduated early from UCLA. All of my experience in ML, data science, and
+            engineering comes from self-study and my own interest. I am constantly seeking to learn
+            and grow!
+          </p>
+          <p>
+            I have taken many{' '}
+            <a href="https://www.linkedin.com/in/williammaucla/">
+              {' '}
+              LinkedIn courses and Coursera courses
+            </a>
+            . Also check out my{' '}
+            <a href="https://www.oreilly.com/playlists/c666e77c-45f7-4275-8678-ce03f0aa1960/">
+              {' '}
+              O'Reilly account{' '}
+            </a>{' '}
+            for books I am reading and my
+            <a href="https://www.zotero.org/groups/2583428/williams_reading_list/library">
+              {' '}
+              Zotero{' '}
+            </a>{' '}
+            library for Arxiv papers and other websites I am browsing, and see below for some
+            projects I have worked on.
+          </p>
+        </div>
       </StyledText>
     </section>
   );

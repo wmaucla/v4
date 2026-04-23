@@ -124,8 +124,6 @@ const About = () => {
     sr.reveal(revealContainer.current, srConfig());
   }, []);
 
-  const skills = ['Kubernetes', 'Terraform', 'Julia', 'Kafka'];
-
   return (
     <StyledAboutSection id="about" ref={revealContainer}>
       <h2 className="numbered-heading">About Me</h2>
@@ -135,27 +133,16 @@ const About = () => {
           <div>
             <p>I currently live and work remotely near NYC.</p>
             <p>
-              I’m a machine learning engineering leader focused on building scalable ML platforms
-              and real-time decision systems. My work sits at the intersection of ML research and
-              production infrastructure—turning models and data pipelines into reliable systems that
-              power business-critical products. I’ve led the development of large-scale ML platforms
-              that drive tens of millions in revenue, process hundreds of millions of real-time
-              decisions, and enable teams to deploy and operate machine learning safely in
+              I’m a machine learning engineering leader focused on scaling ML systems that deliver
+              real business impact, having built enterprise-grade platforms that generate tens of
+              millions in revenue and power hundreds of millions of real-time decisions in
               production.
             </p>
             <p>
               When I'm not working or tinkering (check out my github/gitlab stats!) I love to travel
               (its not a photoshopped photo!) and learn new things.
             </p>
-            <p>
-              While I'm currently working in the MLE / MLOps domain, here are some of the
-              technologies I’ve been using recently:
-            </p>
           </div>
-
-          <ul className="About Me-list">
-            {skills && skills.map((skill, i) => <li key={i}>{skill}</li>)}
-          </ul>
         </StyledText>
         <StyledPic>
           <div className="wrapper">
