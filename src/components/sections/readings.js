@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styled from 'styled-components';
 import { srConfig } from '@config';
@@ -165,39 +164,14 @@ const StyledProject = styled.li`
   }
 `;
 
-
 const Readings = () => {
-  const data = useStaticQuery(graphql`
-    query {
-      projects: allMarkdownRemark(
-        filter: {
-          fileAbsolutePath: { regex: "/projects/" }
-          frontmatter: { showInProjects: { ne: false } }
-        }
-        sort: { fields: [frontmatter___date], order: DESC }
-      ) {
-        edges {
-          node {
-            frontmatter {
-              title
-              tech
-              github
-              external
-            }
-            html
-          }
-        }
-      }
-    }
-  `);
-
-  const [showMore, setShowMore] = useState(false);
   const revealTitle = useRef(null);
   const revealArchiveLink = useRef(null);
   const revealProjects = useRef([]);
   const prefersReducedMotion = usePrefersReducedMotion();
   const [apiData, setAPIData] = useState([]);
-  
+  const itemRefs = useRef([]);
+
   useEffect(() => {
     if (prefersReducedMotion) {
       return;
@@ -205,28 +179,27 @@ const Readings = () => {
 
     const requestOptions = {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json', 
-        'Zotero-API-Key': process.env.GATSBY_API_KEY  // yes this is very bad
-      }
+      headers: {
+        'Content-Type': 'application/json',
+        'Zotero-API-Key': process.env.GATSBY_API_KEY, // yes this is very bad
+      },
     };
     fetch('https://api.zotero.org/groups/2583428/items?limit=6', requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        setAPIData(data)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Zotero API error: ${response.status}`);
         }
-      )
-
+        return response.json();
+      })
+      .then(data => setAPIData(data))
+      .catch(err => console.warn('Could not load readings:', err));
 
     sr.reveal(revealTitle.current, srConfig());
     sr.reveal(revealArchiveLink.current, srConfig());
     revealProjects.current.forEach((ref, i) => sr.reveal(ref, srConfig(i * 100)));
-
   }, []);
 
   const GRID_LIMIT = 6;
-  const projects = data.projects.edges.filter(({ node }) => node);
-  const firstSix = projects.slice(0, GRID_LIMIT);
-  const projectsToShow = showMore ? projects : firstSix;
 
   const projectInner = node => {
     const { title, url, abstractNote } = node;
@@ -253,12 +226,15 @@ const Readings = () => {
           </div>
 
           <h3 className="readings-title">
-            <a target="_blank" rel="noreferrer">
+            <a href={url} target="_blank" rel="noreferrer">
               {title}
             </a>
           </h3>
 
-          <div className="readings-description" dangerouslySetInnerHTML={{ __html: abstractNote }} />
+          <div
+            className="readings-description"
+            dangerouslySetInnerHTML={{ __html: abstractNote }}
+          />
         </header>
       </div>
     );
@@ -273,30 +249,44 @@ const Readings = () => {
       </Link>
       */}
 
-      <p> Readings are fetched automatically from <a href="https://www.zotero.org/groups/2583428/williams_reading_list/library"> my Zotero library. </a></p>
-      
+      <p>
+        {' '}
+        Readings are fetched automatically from{' '}
+        <a href="https://www.zotero.org/groups/2583428/williams_reading_list/library">
+          {' '}
+          my Zotero library.{' '}
+        </a>
+      </p>
+
       <ul className="projects-grid">
-          <TransitionGroup component={null}>
-            {apiData &&
-              apiData.map((item, i) => (
+        <TransitionGroup component={null}>
+          {apiData &&
+            apiData.map((item, i) => {
+              if (!itemRefs.current[i]) {
+                itemRefs.current[i] = React.createRef();
+              }
+              return (
                 <CSSTransition
                   key={i}
+                  nodeRef={itemRefs.current[i]}
                   classNames="fadeup"
                   timeout={i >= GRID_LIMIT ? (i - GRID_LIMIT) * 300 : 300}
                   exit={false}>
                   <StyledProject
-                    key={i}
-                    ref={el => (revealProjects.current[i] = el)}
+                    ref={el => {
+                      itemRefs.current[i].current = el;
+                      revealProjects.current[i] = el;
+                    }}
                     style={{
                       transition: `all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1) 0s;`,
                     }}>
                     {projectInner(item.data)}
                   </StyledProject>
                 </CSSTransition>
-              ))}
-          </TransitionGroup>
-      </ul>  
-
+              );
+            })}
+        </TransitionGroup>
+      </ul>
     </StyledProjectsSection>
   );
 };
