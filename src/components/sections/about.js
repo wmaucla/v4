@@ -18,34 +18,7 @@ const StyledAboutSection = styled.section`
     }
   }
 `;
-const StyledText = styled.div`
-  ul.skills-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(140px, 200px));
-    grid-gap: 0 10px;
-    padding: 0;
-    margin: 20px 0 0 0;
-    overflow: hidden;
-    list-style: none;
 
-    li {
-      position: relative;
-      margin-bottom: 10px;
-      padding-left: 20px;
-      font-family: var(--font-mono);
-      font-size: var(--fz-xs);
-
-      &:before {
-        content: '▹';
-        position: absolute;
-        left: 0;
-        color: var(--green);
-        font-size: var(--fz-sm);
-        line-height: 12px;
-      }
-    }
-  }
-`;
 const StyledPic = styled.div`
   position: relative;
   max-width: 300px;
@@ -112,6 +85,35 @@ const StyledPic = styled.div`
   }
 `;
 
+const StyledText = styled.div`
+  ul.skills-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(140px, 200px));
+    grid-gap: 0 10px;
+    padding: 0;
+    margin: 20px 0 0 0;
+    overflow: hidden;
+    list-style: none;
+
+    li {
+      position: relative;
+      margin-bottom: 10px;
+      padding-left: 20px;
+      font-family: var(--font-mono);
+      font-size: var(--fz-xs);
+
+      &:before {
+        content: '▹';
+        position: absolute;
+        left: 0;
+        color: var(--green);
+        font-size: var(--fz-sm);
+        line-height: 12px;
+      }
+    }
+  }
+`;
+
 const About = () => {
   const revealContainer = useRef(null);
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -133,14 +135,14 @@ const About = () => {
           <div>
             <p>I currently live and work remotely near NYC.</p>
             <p>
-              I’m a machine learning engineering leader focused on scaling ML systems that deliver
+              I'm a machine learning engineering leader focused on scaling ML systems that deliver
               real business impact, having built enterprise-grade platforms that generate tens of
               millions in revenue and power hundreds of millions of real-time decisions in
               production.
             </p>
             <p>
               When I'm not working or tinkering (check out my github/gitlab stats!) I love to travel
-              (it's not a photoshopped photo!) and learn new things.
+              and learn new things.
             </p>
           </div>
         </StyledText>

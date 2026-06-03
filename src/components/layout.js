@@ -3,15 +3,12 @@ import PropTypes from 'prop-types';
 import styled, { ThemeProvider } from 'styled-components';
 import { Head, Loader, Nav, Social, Email, Footer } from '@components';
 import { GlobalStyle, theme } from '@styles';
-import ReactGA from 'react-ga4';
 
 const StyledContent = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 `;
-
-ReactGA.initialize('G-921L24GWG5');
 
 const Layout = ({ children, location }) => {
   const isHome = location.pathname === '/';
@@ -48,8 +45,6 @@ const Layout = ({ children, location }) => {
 
     handleExternalLinks();
   }, [isLoading]);
-
-  ReactGA.send({ hitType: 'pageview', page: '/', title: 'Main page' });
 
   return (
     <>
