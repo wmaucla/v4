@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
+import { StaticImage } from 'gatsby-plugin-image';
 import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
 import { srConfig } from '@config';
@@ -164,6 +165,45 @@ const StyledTabPanel = styled.div`
   }
 `;
 
+const StyledWorkStats = styled.div`
+  margin-top: 80px;
+
+  h2 {
+    font-size: var(--fz-heading);
+    margin-bottom: 30px;
+  }
+
+  .quote {
+    color: var(--light-slate);
+    font-size: var(--fz-lg);
+    margin-bottom: 40px;
+    line-height: 1.6;
+    max-width: 600px;
+  }
+
+  h4 {
+    font-size: var(--fz-lg);
+    margin-bottom: 20px;
+    margin-top: 40px;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
+
+  .stats-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+
+    img {
+      border-radius: var(--border-radius);
+      max-width: 100%;
+      height: auto;
+    }
+  }
+`;
+
 const Jobs = () => {
   const data = useStaticQuery(graphql`
     query {
@@ -303,6 +343,37 @@ const Jobs = () => {
             })}
         </StyledTabPanels>
       </div>
+
+      <StyledWorkStats>
+        <h2>Work Stats</h2>
+
+        <p className="quote">
+          I'm committed to coding and learning something new every day. My contributions reflect
+          this daily growth—building systems, solving problems, and continuously improving my craft.
+        </p>
+
+        <h4>Attain Gitlab</h4>
+        <div className="stats-container">
+          <a href="https://gitlab.com/wma7" target="_blank" rel="noreferrer">
+            <StaticImage
+              src="../../images/gitlab-history.png"
+              alt="GitLab History"
+              style={{ cursor: 'pointer' }}
+            />
+          </a>
+        </div>
+
+        <h4>Shipt Github</h4>
+        <div className="stats-container">
+          <a href="https://git.io/streak-stats">
+            <img
+              height="200"
+              alt="GitHub Streak Stats"
+              src="https://github-readme-streak-stats.herokuapp.com?user=willmashipt&theme=dark&date_format=M%20j%5B%2C%20Y%5D&exclude_days=Sun,Sat"
+            />
+          </a>
+        </div>
+      </StyledWorkStats>
     </StyledJobsSection>
   );
 };

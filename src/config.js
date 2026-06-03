@@ -7,7 +7,7 @@ module.exports = {
       url: 'https://github.com/wmaucla',
     },
     {
-      name: 'Linkedin',
+      name: 'LinkedIn',
       url: 'https://www.linkedin.com/in/wmaucla',
     },
     {

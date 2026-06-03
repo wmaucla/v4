@@ -7,10 +7,8 @@ location: 'Remote'
 range: 'June 2020 - Jan 2022'
 ---
 
-I returned back to Liberty Mutual to join the Office of Data Science, a center of DS enterprise excellence.
+I returned to Liberty Mutual to join the Office of Data Science, where I worked on establishing ML best practices across the enterprise.
 
-- Helped create an enterprise standard for DS model deployment / MLOps by using and experimenting with various tools (Airflow, MLflow, Seldon)
-- Built an async pipeline for DSM tiles (computer vision) for faster image processing
-- Supported enterprise NLP efforts for extracting information from emails using NLP (transformer models)
-- Helped prototype graph claims fraud analytics / modeling using Neo4j
-- I was a manager for co-ops, and helped deploy a NLP model for email triage (estimated 100k+ annual value)
+- Championed enterprise MLOps adoption, helping teams shift from one-off projects to sustainable, scalable practices
+- Delivered $1M+ in annual value through high-impact projects, including an aerial imagery pipeline that improved performance by 70%
+- Modernized model deployment for the email triage system, setting a template that other teams adopted for future projects

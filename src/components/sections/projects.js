@@ -267,7 +267,7 @@ const Projects = () => {
       <h2 ref={revealTitle}>Personal Projects</h2>
 
       {/*
-      
+
       <Link className="inline-link archive-link" to="/archive" ref={revealArchiveLink}>
         view the archive
       </Link>

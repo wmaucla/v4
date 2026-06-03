@@ -11,4 +11,4 @@ company:
 showInProjects: true
 ---
 
-This project aims to develop a comprehensive Kubernetes stack, utilizing a wide array of tools offered by the Cloud Native Computing Foundation or affiliated with the Linux Foundation.
+A comprehensive Kubernetes setup using CNCF tools and best practices.

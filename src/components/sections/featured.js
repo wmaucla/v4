@@ -55,29 +55,22 @@ const Featured = () => {
       <StyledText>
         <div>
           <p>
-            I studied actuarial mathematics with a minor in statistics and a minor in computer
-            science and graduated early from UCLA. All of my experience in ML, data science, and
-            engineering comes from self-study and my own interest. I am constantly seeking to learn
-            and grow!
+            I studied actuarial mathematics with minors in statistics and computer science at UCLA.
+            All of my experience in ML, data science, and engineering comes from self-study and
+            genuine curiosity. I'm constantly seeking to learn and grow.
           </p>
           <p>
-            I have taken many{' '}
-            <a href="https://www.linkedin.com/in/williammaucla/">
-              {' '}
-              LinkedIn courses and Coursera courses
-            </a>
-            . Also check out my{' '}
+            I've completed courses on{' '}
+            <a href="https://www.linkedin.com/in/williammaucla/">LinkedIn Learning and Coursera</a>.
+            Also check out my{' '}
             <a href="https://www.oreilly.com/playlists/c666e77c-45f7-4275-8678-ce03f0aa1960/">
-              {' '}
-              O'Reilly account{' '}
+              O'Reilly account
             </a>{' '}
-            for books I am reading and my
+            for books I'm reading and my{' '}
             <a href="https://www.zotero.org/groups/2583428/williams_reading_list/library">
-              {' '}
-              Zotero{' '}
+              Zotero library
             </a>{' '}
-            library for Arxiv papers and other websites I am browsing, and see below for some
-            projects I have worked on.
+            for arXiv papers and research I'm exploring.
           </p>
         </div>
       </StyledText>

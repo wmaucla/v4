@@ -140,7 +140,7 @@ const About = () => {
             </p>
             <p>
               When I'm not working or tinkering (check out my github/gitlab stats!) I love to travel
-              (its not a photoshopped photo!) and learn new things.
+              (it's not a photoshopped photo!) and learn new things.
             </p>
           </div>
         </StyledText>

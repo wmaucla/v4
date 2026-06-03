@@ -10,4 +10,4 @@ company:
 showInProjects: true
 ---
 
-Designed to provide recommendations from Arxiv - deployed as a heroku app
+Provides arXiv paper recommendations and is deployed on Heroku.

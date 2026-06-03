@@ -7,13 +7,8 @@ location: 'Remote/New York City'
 range: 'May 2024 - Present'
 ---
 
-I'm currently at Attain, a fintech/adtech startup as a technical lead for MLOps and ML Engineering related initiatives.
+I'm currently at Attain, a fintech/adtech startup, where I work on ML engineering and platform initiatives.
 
-Here are some quick highlights:
-
-- Grew the top revenue-generating book of business 80% YoY - tens of millions in revenue generated
-- Built, maintained, and enhanced 30+ core underwriting models iterations with 0 engineering related outages
-- Helped grow the DS / ML team with direct hires and mentorship
-- Optimized machine learning workflows within a set budget by adjusting batch training and inference strategies to prevent exceeding the allocated spend
-- Introduced GPU-based model training and integrated GPUs into internal GKE clusters to accelerate ML workloads
-- Promoted within a year from staff engineer
+- Drove $20M+ in incremental revenue (80% YoY growth) and tripled underwriting capacity through model development and optimization
+- Built a highly reliable ML platform powering 260M+ real-time underwriting decisions with zero engineering outages
+- Reduced core system complexity by 85% while improving model performance, making the system faster to iterate on
