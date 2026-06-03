@@ -1,0 +1,71 @@
+# William Ma — llms.txt
+# Machine-readable profile metadata for LLMs and AI assistants.
+# Standard: https://llmstxt.org
+
+## Identity
+Name: William Ma
+Role: Senior ML Engineering Manager
+Location: New York City (Remote)
+Email: williammaucla@gmail.com
+Website: https://wmaucla.github.io
+GitHub: https://github.com/wmaucla
+GitHub (work): https://github.com/willmashipt
+LinkedIn: https://www.linkedin.com/in/williammaucla
+
+## Summary
+William Ma is an ML Engineering Manager with a strong background in building
+production ML systems, MLOps platforms, and data infrastructure at scale.
+He has driven significant business impact across fintech, insurtech, adtech,
+and e-commerce domains. He is passionate about turning research into reliable,
+high-throughput production systems and helping data science teams move faster.
+
+## Current Role
+Company: Attain (fintech/adtech startup)
+Title: Senior ML Engineering Manager
+Period: May 2024 - Present
+Highlights:
+- Drove $20M+ in incremental revenue (80% YoY growth) through model development and optimization — the underwriting model is the core revenue engine of the business
+- Tripled underwriting capacity while maintaining system reliability
+- Built an ML platform powering 260M+ real-time underwriting decisions with zero engineering outages
+- Reduced core system complexity by 85% while improving model performance
+
+## Experience
+- Senior MLOps Engineer, Shipt (Jan 2022 - May 2024)
+  Built a multi-region feature store with millisecond latency, introduced Espresso (project template
+  adopted across all DS teams), standardized ML deployment and experimentation workflows.
+
+- Senior Data Scientist, Liberty Mutual Insurance - Office of Data Science (Jun 2020 - Jan 2022)
+  Championed enterprise MLOps adoption, delivered $1M+ in annual value, modernized model deployment.
+
+- Data Scientist, Solaria Labs - Liberty Mutual (Nov 2017 - Jul 2019)
+  Built investment signals using telematics data, developed driver risk prediction models.
+
+- Data Scientist, Liberty Mutual Insurance - Actuarial (Jul 2016 - Oct 2017)
+  Early data science work in actuarial and pricing domains.
+
+- Research Assistant, Harvard Extension School (Aug 2019 - May 2020)
+
+- Actuarial Analyst, Munich Reinsurance (Aug 2019 - Jun 2020)
+
+## Technical Stack
+Languages: Python, Rust
+Data / ML: Apache Spark, Apache Kafka
+Infrastructure: Kubernetes, Docker, GCP, Terraform, Apache Airflow
+
+## Skills
+- ML Platform Engineering
+- MLOps and model lifecycle management
+- Real-time and batch feature engineering
+- Large-scale distributed systems
+- Cross-functional technical leadership
+- Model productionization and experimentation
+
+## Interests
+- Reading (curated via Zotero: https://www.zotero.org/groups/2583428/williams_reading_list)
+- Machine learning research and engineering
+- Systems programming (Rust)
+- Travel
+
+## Contact Preferences
+Preferred contact: williammaucla@gmail.com
+Open to: engineering leadership roles, staff level IC roles, ML platform consulting, speaking engagements

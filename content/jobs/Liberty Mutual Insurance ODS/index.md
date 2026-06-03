@@ -4,7 +4,7 @@ title: 'Senior Data Scientist'
 company: 'Liberty Mutual Insurance'
 url: 'https://www.libertymutual.com/'
 location: 'Remote'
-range: 'June 2020 - Jan 2022'
+range: 'Jun 2020 - Jan 2022'
 ---
 
 I returned to Liberty Mutual to join the Office of Data Science, where I worked on establishing ML best practices across the enterprise.

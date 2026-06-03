@@ -1,4 +1,15 @@
+export { default as IconAirflow } from './airflow';
 export { default as IconAppStore } from './appstore';
+export { default as IconAWS } from './aws';
+export { default as IconDocker } from './docker';
+export { default as IconGCP } from './gcp';
+export { default as IconKafka } from './kafka';
+export { default as IconKubernetes } from './kubernetes';
+export { default as IconPython } from './python';
+export { default as IconPyTorch } from './pytorch';
+export { default as IconRust } from './rust';
+export { default as IconSpark } from './spark';
+export { default as IconTerraform } from './terraform';
 export { default as IconBookmark } from './bookmark';
 export { default as IconCodepen } from './codepen';
 export { default as IconZotero } from './zotero';

@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
+
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 import PropTypes from 'prop-types';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styled from 'styled-components';
@@ -9,7 +11,7 @@ const StyledHeroSection = styled.section`
   ${({ theme }) => theme.mixins.flexCenter};
   flex-direction: column;
   align-items: flex-start;
-  min-height: 100vh;
+  width: 100%;
   margin-bottom: 0;
 
   h1 {
@@ -28,10 +30,15 @@ const StyledHeroSection = styled.section`
     margin: 10px 0 40px 0;
     color: var(--slate);
     line-height: 0.9;
-    font-size: clamp(40px, 8vw, 0px);
+    font-size: ${({ $snapped }) =>
+    $snapped ? 'clamp(28px, 5.6vw, 56px)' : 'clamp(40px, 8vw, 80px)'};
     opacity: ${({ showTitle }) => (showTitle ? 1 : 0)};
-    transition: opacity 0.3s ease-in;
+    transition: opacity 0.3s ease-in, font-size 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
     font-family: var(--font-mono);
+
+    @media (max-width: 768px) {
+      font-size: clamp(28px, 8vw, 56px);
+    }
   }
 
   p {
@@ -52,6 +59,18 @@ const StyledHeroSection = styled.section`
   }
 `;
 
+const StyledCollapsible = styled.div`
+  overflow: hidden;
+  max-height: ${({ $snapped }) => ($snapped ? '0' : '120px')};
+  opacity: ${({ $snapped }) => ($snapped ? 0 : 1)};
+  transition: max-height 0.5s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.4s ease;
+
+  @media (max-width: 768px) {
+    max-height: 120px;
+    opacity: 1;
+  }
+`;
+
 const StyledIntro = styled.div`
   font-size: var(--fz-heading);
   color: var(--green);
@@ -66,12 +85,20 @@ const StyledIntro = styled.div`
 
 const StyledName = styled.h2`
   margin: 0;
-  font-size: clamp(40px, 8vw, 80px);
+  font-size: ${({ $snapped }) =>
+    $snapped ? 'clamp(20px, 3.5vw, 56px)' : 'clamp(40px, 8vw, 80px)'};
   font-weight: 700;
   line-height: 1.1;
   color: var(--lightest-slate);
   min-height: 1.2em;
   font-family: var(--font-mono);
+  white-space: nowrap;
+  transition: font-size 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+  @media (max-width: 768px) {
+    font-size: clamp(36px, 10vw, 64px);
+    white-space: normal;
+  }
 `;
 
 const StyledCursor = styled.span`
@@ -91,25 +118,33 @@ const StyledCursor = styled.span`
   }
 `;
 
-const StyledButton = styled.a`
-  ${({ theme }) => theme.mixins.bigButton};
-  display: inline-block;
-  opacity: ${({ $show }) => ($show ? 1 : 0)};
-  transform: ${({ $show }) => ($show ? 'translateY(0)' : 'translateY(10px)')};
-  transition: opacity 0.3s ease-in, transform 0.3s ease-in;
-  transition-delay: ${({ $delay }) => $delay}ms;
-  width: fit-content;
-`;
+// TODO: phantom flash of "ML Engineering Manager" in the left panel
+// The title briefly shows "ML Engineering Manager" during the snap transition.
+// Root cause: Gatsby SSR renders snapped=false (no window), causing a hydration
+// mismatch on the first client paint before useIsomorphicLayoutEffect fires.
+// textSnapped + useIsomorphicLayoutEffect reduces but does not fully eliminate it.
+// Possible fixes to explore:
+//   1. Move hero title into a CSS-only solution (no JS text swap at all) using
+//      CSS content tricks or two separate elements shown/hidden via opacity.
+//   2. Use Gatsby's gatsby-ssr.js / wrapRootElement to inject scroll position
+//      into initial state before first render.
+//   3. Render the hero with visibility: hidden until after first layout effect
+//      fires, then fade it in — trades flash for a brief invisible frame.
 
-const StyledGithubLink = styled(StyledButton)`
-  margin-top: 50px;
-`;
+const Hero = ({ onButtonsShow, snapped }) => {
+  // textSnapped lags behind snapped when unsnapping — waits for the panel
+  // to finish expanding (0.7s) before swapping "ML Engineer" → "ML Engineering Manager"
+  const [textSnapped, setTextSnapped] = useState(snapped);
 
-const StyledLinkedInLink = styled(StyledButton)`
-  margin-top: 10px;
-`;
+  useIsomorphicLayoutEffect(() => {
+    if (snapped) {
+      setTextSnapped(true);
+    } else {
+      const timer = setTimeout(() => setTextSnapped(false), 700);
+      return () => clearTimeout(timer);
+    }
+  }, [snapped]);
 
-const Hero = ({ onButtonsShow }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [displayIntro, setDisplayIntro] = useState('');
   const [displayName, setDisplayName] = useState('');
@@ -118,13 +153,13 @@ const Hero = ({ onButtonsShow }) => {
   const [showTitle, setShowTitle] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
   const [isTypingComplete, setIsTypingComplete] = useState(false);
-  const [showButtons, setShowButtons] = useState(false);
   const [cursorLine, setCursorLine] = useState(0);
   const prefersReducedMotion = usePrefersReducedMotion();
+  const itemRefs = useRef([...Array(3)].map(() => React.createRef()));
 
   const fullIntro = 'Hi, my name is ';
   const fullName = 'William Ma';
-  const fullTitle = 'ML Engineering Manager';
+  const fullTitle = snapped ? 'ML Engineer' : 'ML Engineering Manager';
   const fullMessage = 'Thanks for taking a look at my profile!';
   const fullText = fullIntro + fullName + fullTitle + fullMessage;
 
@@ -145,6 +180,9 @@ const Hero = ({ onButtonsShow }) => {
       setDisplayMessage(fullMessage);
       setShowTitle(true);
       setShowMessage(true);
+      if (onButtonsShow) {
+        onButtonsShow();
+      }
       return;
     }
 
@@ -185,12 +223,11 @@ const Hero = ({ onButtonsShow }) => {
         currentIndex++;
 
         const isMessageLine = currentIndex > fullIntro.length + fullName.length + fullTitle.length;
-        const delay = isMessageLine ? 20 : 80;
+        const delay = isMessageLine ? 12 : 48;
         typingTimer = setTimeout(scheduleNextChar, delay);
       } else {
         setIsTypingComplete(true);
         setCursorLine(-1);
-        setShowButtons(true);
         if (onButtonsShow) {
           onButtonsShow();
         }
@@ -200,20 +237,31 @@ const Hero = ({ onButtonsShow }) => {
     scheduleNextChar();
 
     return () => {
-      if (typingTimer) {clearTimeout(typingTimer);}
+      if (typingTimer) {
+        clearTimeout(typingTimer);
+      }
     };
   }, [isMounted, prefersReducedMotion]);
 
+  // Derive the visible title — textSnapped delays the swap back to avoid
+  // showing "ML Engineering Manager" while the panel is still narrow
+  const visibleTitle =
+    textSnapped && typeof window !== 'undefined' && window.innerWidth > 768
+      ? 'ML Engineer'
+      : displayTitle;
+
   const one = (
     <div>
-      <StyledIntro>
-        {displayIntro}
-        <StyledCursor
-          $show={cursorLine === 0 && !isTypingComplete && displayIntro.length < fullIntro.length}>
-          |
-        </StyledCursor>
-      </StyledIntro>
-      <StyledName>
+      <StyledCollapsible $snapped={snapped}>
+        <StyledIntro>
+          {displayIntro}
+          <StyledCursor
+            $show={cursorLine === 0 && !isTypingComplete && displayIntro.length < fullIntro.length}>
+            |
+          </StyledCursor>
+        </StyledIntro>
+      </StyledCollapsible>
+      <StyledName $snapped={snapped}>
         {displayName}
         <StyledCursor
           $show={
@@ -229,43 +277,22 @@ const Hero = ({ onButtonsShow }) => {
   );
   const two = (
     <h3 className="big-heading">
-      {displayTitle}
+      {visibleTitle}
       <StyledCursor $show={cursorLine === 1 && !isTypingComplete}>|</StyledCursor>
     </h3>
   );
   const three = (
-    <>
+    <StyledCollapsible $snapped={snapped}>
       <p>
         {displayMessage}
         <StyledCursor $show={cursorLine === 2 && !isTypingComplete}>|</StyledCursor>
       </p>
-    </>
+    </StyledCollapsible>
   );
-  const four = (
-    <StyledGithubLink
-      href="https://github.com/wmaucla"
-      target="_blank"
-      rel="noreferrer"
-      $show={showButtons}
-      $delay={0}>
-      Check out my Github!
-    </StyledGithubLink>
-  );
-  const five = (
-    <StyledLinkedInLink
-      href="https://www.linkedin.com/in/williammaucla/"
-      target="_blank"
-      rel="noreferrer"
-      $show={showButtons}
-      $delay={100}>
-      Connect on my LinkedIn!
-    </StyledLinkedInLink>
-  );
-
-  const items = [one, two, three, four, five];
+  const items = [one, two, three];
 
   return (
-    <StyledHeroSection showTitle={showTitle} showMessage={showMessage}>
+    <StyledHeroSection showTitle={showTitle} showMessage={showMessage} $snapped={snapped}>
       {prefersReducedMotion ? (
         <>
           {items.map((item, i) => (
@@ -276,8 +303,14 @@ const Hero = ({ onButtonsShow }) => {
         <TransitionGroup component={null}>
           {isMounted &&
             items.map((item, i) => (
-              <CSSTransition key={i} classNames="fadeup" timeout={loaderDelay}>
-                <div style={{ transitionDelay: `${i + 1}00ms` }}>{item}</div>
+              <CSSTransition
+                key={i}
+                nodeRef={itemRefs.current[i]}
+                classNames="fadeup"
+                timeout={loaderDelay}>
+                <div ref={itemRefs.current[i]} style={{ transitionDelay: `${i + 1}00ms` }}>
+                  {item}
+                </div>
               </CSSTransition>
             ))}
         </TransitionGroup>
@@ -288,6 +321,7 @@ const Hero = ({ onButtonsShow }) => {
 
 Hero.propTypes = {
   onButtonsShow: PropTypes.func,
+  snapped: PropTypes.bool,
 };
 
 export default Hero;
