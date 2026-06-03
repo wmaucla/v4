@@ -7,7 +7,7 @@ import sr from '@utils/sr';
 import { usePrefersReducedMotion } from '@hooks';
 
 const StyledJobsSection = styled.section`
-  max-width: 900px;
+  max-width: 1100px;
 `;
 
 const StyledTimeline = styled.div`
@@ -98,6 +98,7 @@ const StyledJobItem = styled.div`
       margin-top: 30px;
       border-radius: var(--border-radius);
       overflow: hidden;
+      max-width: 60%;
 
       img {
         max-width: 100%;

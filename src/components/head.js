@@ -47,6 +47,10 @@ const Head = ({ title = null, description = null, image = null }) => {
       <meta property="og:type" content="website" />
 
       <meta name="google-site-verification" content="DCl7VAf9tcz6eD9gb67NfkNnJ1PKRNcg8qQiwpbx9Lk" />
+
+      {/* LLM-readable metadata discovery */}
+      <link rel="llms" type="text/plain" href={`${siteUrl}/llms.txt`} />
+      <meta name="llms-txt" content={`${siteUrl}/llms.txt`} />
     </Helmet>
   );
 };
