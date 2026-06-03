@@ -21,14 +21,14 @@ const variables = css`
       sans-serif;
     --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
 
-    --fz-xxs: 17px;
-    --fz-xs: 18px;
-    --fz-sm: 19px;
-    --fz-md: 22px;
-    --fz-lg: 24px;
-    --fz-xl: 26px;
-    --fz-xxl: 29px;
-    --fz-heading: 43px;
+    --fz-xxs: 15px;
+    --fz-xs: 16px;
+    --fz-sm: 17px;
+    --fz-md: 20px;
+    --fz-lg: 22px;
+    --fz-xl: 23px;
+    --fz-xxl: 26px;
+    --fz-heading: 39px;
 
     --border-radius: 4px;
     --nav-height: 100px;

@@ -31,7 +31,7 @@ const StyledHeroSection = styled.section`
     color: var(--slate);
     line-height: 0.9;
     font-size: ${({ $snapped }) =>
-    $snapped ? 'clamp(28px, 5.6vw, 56px)' : 'clamp(40px, 8vw, 80px)'};
+    $snapped ? 'clamp(16px, 3.5vw, 46px)' : 'clamp(40px, 8vw, 80px)'};
     opacity: ${({ showTitle }) => (showTitle ? 1 : 0)};
     transition: opacity 0.3s ease-in, font-size 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
     font-family: var(--font-mono);

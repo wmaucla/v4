@@ -17,6 +17,10 @@ import {
   Readings,
 } from '@components';
 
+const SNAPPED_WIDTH = '220px';
+const SNAPPED_PERCENT = '22%';
+const SNAPPED_LEFT_WIDTH = `max(${SNAPPED_PERCENT}, ${SNAPPED_WIDTH})`;
+
 const StyledFixedHero = styled.div`
   position: fixed;
   top: 0;
@@ -26,8 +30,10 @@ const StyledFixedHero = styled.div`
   display: flex;
   align-items: center;
   background-color: var(--navy);
+  overflow: hidden;
 
-  width: ${({ $snapped }) => ($snapped ? '22%' : '100%')};
+  width: ${({ $snapped }) => ($snapped ? SNAPPED_LEFT_WIDTH : '100%')};
+  min-width: ${({ $snapped }) => ($snapped ? SNAPPED_WIDTH : 'unset')};
   padding: ${({ $snapped }) => ($snapped ? '0 20px 0 50px' : '0 150px')};
   transition: width 0.7s cubic-bezier(0.645, 0.045, 0.355, 1),
     padding 0.7s cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -42,7 +48,7 @@ const StyledFixedHero = styled.div`
 `;
 
 const StyledContent = styled.div`
-  margin-left: 22%;
+  margin-left: ${SNAPPED_LEFT_WIDTH};
 
   @media (max-width: 768px) {
     margin-left: 0;

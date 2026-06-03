@@ -72,6 +72,7 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     min-height: 100%;
     overflow-x: hidden;
+    min-width: 320px;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     background-color: var(--navy);
