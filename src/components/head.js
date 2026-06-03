@@ -6,7 +6,7 @@ import { useStaticQuery, graphql } from 'gatsby';
 
 // https://www.gatsbyjs.com/docs/add-seo-component/
 
-const Head = ({ title, description, image }) => {
+const Head = ({ title = null, description = null, image = null }) => {
   const { pathname } = useLocation();
 
   const { site } = useStaticQuery(
@@ -51,16 +51,10 @@ const Head = ({ title, description, image }) => {
   );
 };
 
-export default Head;
-
 Head.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   image: PropTypes.string,
 };
 
-Head.defaultProps = {
-  title: null,
-  description: null,
-  image: null,
-};
+export default Head;
