@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styled from 'styled-components';
 import { navDelay, loaderDelay } from '@utils';
@@ -49,9 +49,21 @@ const StyledHeroSection = styled.section`
   }
 `;
 
+const StyledTyping = styled.h2`
+  margin: 0;
+  font-size: clamp(40px, 8vw, 80px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--lightest-slate);
+  min-height: 1.2em;
+`;
+
 const Hero = () => {
   const [isMounted, setIsMounted] = useState(false);
+  const [displayText, setDisplayText] = useState('');
   const prefersReducedMotion = usePrefersReducedMotion();
+  const fullText = 'Hi, my name is William Ma';
+  const typingTextRef = useRef('');
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -60,22 +72,41 @@ const Hero = () => {
 
     const timeout = setTimeout(() => setIsMounted(true), navDelay);
     return () => clearTimeout(timeout);
-  }, []);
+  }, [prefersReducedMotion]);
 
-  const one = <h1>Hi, my name is</h1>;
-  const two = <h2 className="big-heading">William Ma</h2>;
-  const three = <h3 className="big-heading">ML Engineering Manager</h3>;
-  const four = (
+  useEffect(() => {
+    if (!isMounted || prefersReducedMotion) {
+      setDisplayText(fullText);
+      return;
+    }
+
+    let currentIndex = 0;
+    const typingInterval = setInterval(() => {
+      if (currentIndex < fullText.length) {
+        typingTextRef.current += fullText[currentIndex];
+        setDisplayText(typingTextRef.current);
+        currentIndex++;
+      } else {
+        clearInterval(typingInterval);
+      }
+    }, 80);
+
+    return () => clearInterval(typingInterval);
+  }, [isMounted, prefersReducedMotion]);
+
+  const one = <StyledTyping className="big-heading">{displayText}</StyledTyping>;
+  const two = <h3 className="big-heading">ML Engineering Manager</h3>;
+  const three = (
     <>
       <p>Thanks for taking a look at my profile!</p>
     </>
   );
-  const five = (
+  const four = (
     <a className="github-link" href="https://github.com/wmaucla" target="_blank" rel="noreferrer">
       Check out my Github!
     </a>
   );
-  const six = (
+  const five = (
     <a
       className="email-link"
       href="https://www.linkedin.com/in/williammaucla/"
@@ -85,7 +116,7 @@ const Hero = () => {
     </a>
   );
 
-  const items = [one, two, three, four, five, six];
+  const items = [one, two, three, four, five];
 
   return (
     <StyledHeroSection>
