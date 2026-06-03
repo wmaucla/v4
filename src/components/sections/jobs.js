@@ -159,7 +159,16 @@ const Jobs = () => {
 
             return (
               <StyledJobItem key={i}>
-                <div className="date">{range}</div>
+                <div className="date">
+                  {range.includes(' - ') ? (
+                    <>
+                      {range.split(' - ')[0]} -<br />
+                      {range.split(' - ')[1]}
+                    </>
+                  ) : (
+                    range
+                  )}
+                </div>
                 <div className="content">
                   <h3>
                     <span>{title}</span>
@@ -187,11 +196,11 @@ const Jobs = () => {
 
                   {company === 'Shipt' && (
                     <div className="stats-image">
-                      <a href="https://git.io/streak-stats">
-                        <img
-                          height="200"
-                          alt="GitHub Streak Stats"
-                          src="https://github-readme-streak-stats.herokuapp.com?user=willmashipt&theme=dark&date_format=M%20j%5B%2C%20Y%5D&exclude_days=Sun,Sat"
+                      <a href="https://github.com/willmashipt" target="_blank" rel="noreferrer">
+                        <StaticImage
+                          src="../../images/shipt-contrib.png"
+                          alt="Shipt GitHub Contributions"
+                          style={{ cursor: 'pointer' }}
                         />
                       </a>
                     </div>

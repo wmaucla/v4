@@ -141,8 +141,11 @@ const About = () => {
               production.
             </p>
             <p>
-              When I'm not working or tinkering (check out my github/gitlab stats!) I love to travel
-              and learn new things.
+              When I'm not working or{' '}
+              <a href="https://github.com/wmaucla" target="_blank" rel="noreferrer">
+                tinkering
+              </a>
+              , I love to travel and learn new things.
             </p>
           </div>
         </StyledText>

@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Layout, Hero, About, Jobs, Featured, Projects, Contact, Readings } from '@components';
+import {
+  Layout,
+  Hero,
+  About,
+  Jobs,
+  Featured,
+  Projects,
+  Stack,
+  Contact,
+  Readings,
+} from '@components';
 
 const StyledMainContainer = styled.main`
   counter-reset: section;
@@ -15,17 +25,24 @@ const StyledAboutWrapper = styled.div`
 
 const IndexPage = ({ location }) => {
   const [showAbout, setShowAbout] = useState(false);
+  const [heroComplete, setHeroComplete] = useState(false);
+
+  const handleButtonsShow = () => {
+    setShowAbout(true);
+    setHeroComplete(true);
+  };
 
   return (
-    <Layout location={location}>
+    <Layout location={location} heroComplete={heroComplete}>
       <StyledMainContainer className="fillHeight">
-        <Hero onButtonsShow={() => setShowAbout(true)} />
+        <Hero onButtonsShow={handleButtonsShow} />
         <StyledAboutWrapper $show={showAbout}>
           <About />
         </StyledAboutWrapper>
         <Jobs />
         <Featured />
         <Projects />
+        <Stack />
         <Readings />
         <Contact />
       </StyledMainContainer>

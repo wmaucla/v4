@@ -15,150 +15,70 @@ const StyledProjectsSection = styled.section`
     font-size: clamp(24px, 5vw, var(--fz-heading));
   }
 
-  .archive-link {
-    font-family: var(--font-mono);
-    font-size: var(--fz-sm);
-    &:after {
-      bottom: 0.1em;
-    }
-  }
-
-  .projects-grid {
+  .readings-list {
     ${({ theme }) => theme.mixins.resetList};
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-gap: 15px;
-    position: relative;
-    margin-top: 50px;
-
-    @media (max-width: 1080px) {
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    }
-  }
-
-  .more-button {
-    ${({ theme }) => theme.mixins.button};
-    margin: 80px auto 0;
+    width: 100%;
+    max-width: 700px;
+    margin-top: 30px;
   }
 `;
 
 const StyledProject = styled.li`
-  position: relative;
-  cursor: default;
-  transition: var(--transition);
-  transition-delay: 1s;
+  border-bottom: 1px solid var(--lightest-navy);
 
-  @media (prefers-reduced-motion: no-preference) {
-    &:hover,
-    &:focus-within {
-      .project-inner {
-        transform: translateY(-7px);
-      }
-    }
+  &:first-child {
+    border-top: 1px solid var(--lightest-navy);
   }
 
   a {
-    position: relative;
-    z-index: 1;
-  }
-
-  .readings-inner {
-    ${({ theme }) => theme.mixins.boxShadow};
-    ${({ theme }) => theme.mixins.flexBetween};
-    flex-direction: column;
-    align-items: flex-start;
-    position: relative;
-    height: 100%;
-    padding: 2rem 1.75rem;
-    border-radius: var(--border-radius);
-    background-color: var(--light-navy);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 4px;
+    color: var(--light-slate);
+    text-decoration: none;
     transition: var(--transition);
-  }
 
-  .readings-top {
-    ${({ theme }) => theme.mixins.flexBetween};
-    margin-bottom: 35px;
-
-    .folder {
+    &:hover {
       color: var(--green);
-      svg {
-        width: 40px;
-        height: 40px;
-      }
     }
 
-    .readings-links {
+    .reading-left {
       display: flex;
       align-items: center;
-      margin-right: -10px;
+      gap: 12px;
+    }
+
+    .reading-type-icon {
+      flex-shrink: 0;
+      color: var(--green);
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    .reading-title {
+      font-size: var(--fz-md);
+      color: var(--lightest-slate);
+      transition: var(--transition);
+    }
+
+    &:hover .reading-title {
+      color: var(--green);
+    }
+
+    &:hover .reading-type-icon {
+      color: var(--green);
+    }
+
+    .external-icon {
+      flex-shrink: 0;
+      margin-left: 12px;
       color: var(--light-slate);
-
-      a {
-        ${({ theme }) => theme.mixins.flexCenter};
-        padding: 5px 7px;
-
-        &.external {
-          svg {
-            width: 22px;
-            height: 22px;
-            margin-top: -4px;
-          }
-        }
-
-        svg {
-          width: 20px;
-          height: 20px;
-        }
-      }
-    }
-  }
-
-  .readings-title {
-    margin: 0 0 10px;
-    color: var(--lightest-slate);
-    font-size: var(--fz-xxl);
-
-    a {
-      position: static;
-
-      &:before {
-        content: '';
-        display: block;
-        position: absolute;
-        z-index: 0;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-      }
-    }
-  }
-
-  .readings-description {
-    color: var(--light-slate);
-    font-size: 17px;
-
-    a {
-      ${({ theme }) => theme.mixins.inlineLink};
-    }
-  }
-
-  .readings-tech-list {
-    display: flex;
-    align-items: flex-end;
-    flex-grow: 1;
-    flex-wrap: wrap;
-    padding: 0;
-    margin: 20px 0 0 0;
-    list-style: none;
-
-    li {
-      font-family: var(--font-mono);
-      font-size: var(--fz-xxs);
-      line-height: 1.75;
-
-      &:not(:last-of-type) {
-        margin-right: 15px;
+      svg {
+        width: 16px;
+        height: 16px;
       }
     }
   }
@@ -173,18 +93,14 @@ const Readings = () => {
   const itemRefs = useRef([]);
 
   useEffect(() => {
-    if (prefersReducedMotion) {
-      return;
-    }
-
     const requestOptions = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Zotero-API-Key': process.env.GATSBY_API_KEY, // yes this is very bad
+        'Zotero-API-Key': process.env.GATSBY_API_KEY,
       },
     };
-    fetch('https://api.zotero.org/groups/2583428/items?limit=6', requestOptions)
+    fetch('https://api.zotero.org/groups/2583428/items?limit=5', requestOptions)
       .then(response => {
         if (!response.ok) {
           throw new Error(`Zotero API error: ${response.status}`);
@@ -193,50 +109,46 @@ const Readings = () => {
       })
       .then(data => setAPIData(data))
       .catch(err => console.warn('Could not load readings:', err));
+  }, []);
 
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      return;
+    }
     sr.reveal(revealTitle.current, srConfig());
     sr.reveal(revealArchiveLink.current, srConfig());
     revealProjects.current.forEach((ref, i) => sr.reveal(ref, srConfig(i * 100)));
   }, []);
 
-  const GRID_LIMIT = 6;
+  const GRID_LIMIT = 5;
+
+  const getTypeIcon = itemType => {
+    switch (itemType) {
+      case 'journalArticle':
+        return 'Bookmark';
+      case 'blogPost':
+        return 'Star';
+      case 'webpage':
+      default:
+        return 'External';
+    }
+  };
 
   const projectInner = node => {
-    const { title, url, abstractNote } = node;
+    const { title, url, itemType } = node;
 
     return (
-      <div className="readings-inner">
-        <header>
-          <div className="readings-top">
-            <div className="folder">
-              <Icon name="Folder" />
-            </div>
-            <div className="readings-links">
-              {title && (
-                <a
-                  href={url}
-                  aria-label="External Link"
-                  className="external"
-                  target="_blank"
-                  rel="noreferrer">
-                  <Icon name="External" />
-                </a>
-              )}
-            </div>
-          </div>
-
-          <h3 className="readings-title">
-            <a href={url} target="_blank" rel="noreferrer">
-              {title}
-            </a>
-          </h3>
-
-          <div
-            className="readings-description"
-            dangerouslySetInnerHTML={{ __html: abstractNote }}
-          />
-        </header>
-      </div>
+      <a href={url} target="_blank" rel="noreferrer" aria-label={title}>
+        <span className="reading-left">
+          <span className="reading-type-icon">
+            <Icon name={getTypeIcon(itemType)} />
+          </span>
+          <span className="reading-title">{title}</span>
+        </span>
+        <span className="external-icon">
+          <Icon name="External" />
+        </span>
+      </a>
     );
   };
 
@@ -258,7 +170,7 @@ const Readings = () => {
         </a>
       </p>
 
-      <ul className="projects-grid">
+      <ul className="readings-list">
         <TransitionGroup component={null}>
           {apiData &&
             apiData.map((item, i) => {
@@ -278,7 +190,7 @@ const Readings = () => {
                       revealProjects.current[i] = el;
                     }}
                     style={{
-                      transition: `all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1) 0s;`,
+                      transition: `all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1) 0s`,
                     }}>
                     {projectInner(item.data)}
                   </StyledProject>

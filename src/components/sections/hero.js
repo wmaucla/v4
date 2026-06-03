@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styled from 'styled-components';
@@ -121,6 +121,7 @@ const Hero = ({ onButtonsShow }) => {
   const [showButtons, setShowButtons] = useState(false);
   const [cursorLine, setCursorLine] = useState(0);
   const prefersReducedMotion = usePrefersReducedMotion();
+  const itemRefs = useRef([...Array(5)].map(() => React.createRef()));
 
   const fullIntro = 'Hi, my name is ';
   const fullName = 'William Ma';
@@ -185,7 +186,7 @@ const Hero = ({ onButtonsShow }) => {
         currentIndex++;
 
         const isMessageLine = currentIndex > fullIntro.length + fullName.length + fullTitle.length;
-        const delay = isMessageLine ? 20 : 80;
+        const delay = isMessageLine ? 12 : 48;
         typingTimer = setTimeout(scheduleNextChar, delay);
       } else {
         setIsTypingComplete(true);
@@ -200,7 +201,9 @@ const Hero = ({ onButtonsShow }) => {
     scheduleNextChar();
 
     return () => {
-      if (typingTimer) {clearTimeout(typingTimer);}
+      if (typingTimer) {
+        clearTimeout(typingTimer);
+      }
     };
   }, [isMounted, prefersReducedMotion]);
 
@@ -276,8 +279,14 @@ const Hero = ({ onButtonsShow }) => {
         <TransitionGroup component={null}>
           {isMounted &&
             items.map((item, i) => (
-              <CSSTransition key={i} classNames="fadeup" timeout={loaderDelay}>
-                <div style={{ transitionDelay: `${i + 1}00ms` }}>{item}</div>
+              <CSSTransition
+                key={i}
+                nodeRef={itemRefs.current[i]}
+                classNames="fadeup"
+                timeout={loaderDelay}>
+                <div ref={itemRefs.current[i]} style={{ transitionDelay: `${i + 1}00ms` }}>
+                  {item}
+                </div>
               </CSSTransition>
             ))}
         </TransitionGroup>
