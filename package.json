@@ -35,6 +35,7 @@
     "animejs": "^3.1.0",
     "babel-plugin-styled-components": "^1.12.0",
     "gatsby": "^5.13.5",
+    "gatsby-plugin-google-gtag": "^5.16.0",
     "gatsby-plugin-image": "^3.16.0",
     "gatsby-plugin-manifest": "^5.16.0",
     "gatsby-plugin-offline": "^6.16.0",

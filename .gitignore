@@ -10,6 +10,18 @@ package-lock.json
 
 .vscode/
 
+# Environment variables
+.env
+.env.*
+!.env.example
+
 # Hide resume
 content/resume/
 content/jobs/*/hidden.md
+
+# Temporary files
+*.swp
+*.swo
+*~
+.tmp
+.cache/

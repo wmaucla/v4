@@ -1,6 +1,6 @@
 ---
 date: '2022-01-01'
-title: 'Senior Engineer'
+title: 'Senior MLOps Engineer'
 company: 'Shipt'
 location: 'Remote/New York City'
 range: 'Jan 2022 - May 2024'
