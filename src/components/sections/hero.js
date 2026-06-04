@@ -92,12 +92,12 @@ const StyledName = styled.h2`
   color: var(--lightest-slate);
   min-height: 1.2em;
   font-family: var(--font-mono);
-  white-space: nowrap;
+  white-space: normal;
+  word-break: break-word;
   transition: font-size 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
 
   @media (max-width: 768px) {
     font-size: clamp(36px, 10vw, 64px);
-    white-space: normal;
   }
 `;
 
@@ -117,19 +117,6 @@ const StyledCursor = styled.span`
     }
   }
 `;
-
-// TODO: phantom flash of "ML Engineering Manager" in the left panel
-// The title briefly shows "ML Engineering Manager" during the snap transition.
-// Root cause: Gatsby SSR renders snapped=false (no window), causing a hydration
-// mismatch on the first client paint before useIsomorphicLayoutEffect fires.
-// textSnapped + useIsomorphicLayoutEffect reduces but does not fully eliminate it.
-// Possible fixes to explore:
-//   1. Move hero title into a CSS-only solution (no JS text swap at all) using
-//      CSS content tricks or two separate elements shown/hidden via opacity.
-//   2. Use Gatsby's gatsby-ssr.js / wrapRootElement to inject scroll position
-//      into initial state before first render.
-//   3. Render the hero with visibility: hidden until after first layout effect
-//      fires, then fade it in — trades flash for a brief invisible frame.
 
 const Hero = ({ onButtonsShow, snapped }) => {
   // textSnapped lags behind snapped when unsnapping — waits for the panel
@@ -173,7 +160,13 @@ const Hero = ({ onButtonsShow, snapped }) => {
   }, [prefersReducedMotion]);
 
   useEffect(() => {
-    if (!isMounted || prefersReducedMotion) {
+    // Pre-mount: just wait, don't show anything yet
+    if (!isMounted) {
+      return;
+    }
+
+    // Reduced motion: skip animation, show everything immediately
+    if (prefersReducedMotion) {
       setDisplayIntro(fullIntro);
       setDisplayName(fullName);
       setDisplayTitle(fullTitle);
@@ -245,10 +238,10 @@ const Hero = ({ onButtonsShow, snapped }) => {
 
   // Derive the visible title — textSnapped delays the swap back to avoid
   // showing "ML Engineering Manager" while the panel is still narrow
-  const visibleTitle =
-    textSnapped && typeof window !== 'undefined' && window.innerWidth > 768
-      ? 'ML Engineer'
-      : displayTitle;
+  const isDesktopSnapped = textSnapped && typeof window !== 'undefined' && window.innerWidth > 768;
+
+  const visibleTitle = isDesktopSnapped ? 'MLE' : displayTitle;
+  const visibleName = isDesktopSnapped ? 'William' : displayName;
 
   const one = (
     <div>
@@ -262,7 +255,7 @@ const Hero = ({ onButtonsShow, snapped }) => {
         </StyledIntro>
       </StyledCollapsible>
       <StyledName $snapped={snapped}>
-        {displayName}
+        {visibleName}
         <StyledCursor
           $show={
             cursorLine === 0 &&

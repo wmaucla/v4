@@ -88,6 +88,13 @@ const IndexPage = ({ location }) => {
     const handleScroll = () => {
       setSnapped(window.scrollY > window.innerHeight * 0.3);
     };
+
+    // Disable browser scroll restoration — prevents the post-reload scroll
+    // jump from causing a snapped=false → snapped=true flash
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
     // Sync immediately before first paint
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -103,7 +110,9 @@ const IndexPage = ({ location }) => {
 
     const handleScrollDepth = () => {
       const scrollable = document.body.scrollHeight - window.innerHeight;
-      if (scrollable <= 0) {return;}
+      if (scrollable <= 0) {
+        return;
+      }
       const pct = Math.round((window.scrollY / scrollable) * 100);
       milestones.forEach(m => {
         if (pct >= m && !fired.has(m)) {
@@ -129,7 +138,9 @@ const IndexPage = ({ location }) => {
 
     sections.forEach(id => {
       const el = document.getElementById(id);
-      if (!el) {return;}
+      if (!el) {
+        return;
+      }
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting && window.gtag) {
