@@ -73,14 +73,18 @@ const Contact = () => {
         the chance - after all, you've made it all the way!
       </p>
       <div className="button-group">
-        <a className="email-link" href={`mailto:${email}`}>
+        <a
+          className="email-link"
+          href={`mailto:${email}`}
+          onClick={() => window.gtag && window.gtag('event', 'cta_click', { cta: 'email' })}>
           Say Hello!
         </a>
         <a
           className="linkedin-link"
           href="https://www.linkedin.com/in/williammaucla"
           target="_blank"
-          rel="noreferrer">
+          rel="noreferrer"
+          onClick={() => window.gtag && window.gtag('event', 'cta_click', { cta: 'linkedin' })}>
           LinkedIn
         </a>
       </div>

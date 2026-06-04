@@ -88,10 +88,93 @@ const IndexPage = ({ location }) => {
     const handleScroll = () => {
       setSnapped(window.scrollY > window.innerHeight * 0.3);
     };
+
+    // Disable browser scroll restoration — prevents the post-reload scroll
+    // jump from causing a snapped=false → snapped=true flash
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
     // Sync immediately before first paint
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // ── GA4 Tracking ──────────────────────────────────────────────────────────
+
+  // 1. Scroll depth milestones (25 / 50 / 75 / 100%)
+  useEffect(() => {
+    const milestones = [25, 50, 75, 100];
+    const fired = new Set();
+
+    const handleScrollDepth = () => {
+      const scrollable = document.body.scrollHeight - window.innerHeight;
+      if (scrollable <= 0) {
+        return;
+      }
+      const pct = Math.round((window.scrollY / scrollable) * 100);
+      milestones.forEach(m => {
+        if (pct >= m && !fired.has(m)) {
+          fired.add(m);
+          if (window.gtag) {
+            window.gtag('event', 'scroll_depth', {
+              depth_percent: m,
+              page: window.location.pathname,
+            });
+          }
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleScrollDepth, { passive: true });
+    return () => window.removeEventListener('scroll', handleScrollDepth);
+  }, []);
+
+  // 2. Section visibility tracking via IntersectionObserver
+  useEffect(() => {
+    const sections = ['about', 'jobs', 'projects', 'stack', 'readings', 'contact'];
+    const observers = [];
+
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) {
+        return;
+      }
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting && window.gtag) {
+            window.gtag('event', 'section_viewed', {
+              section: id,
+              page: window.location.pathname,
+            });
+            // Only fire once per section per visit
+            observer.disconnect();
+          }
+        },
+        { threshold: 0.3 },
+      );
+      observer.observe(el);
+      observers.push(observer);
+    });
+
+    return () => observers.forEach(o => o.disconnect());
+  }, []);
+
+  // 3. Time on page before leaving
+  useEffect(() => {
+    const startTime = Date.now();
+    const handleUnload = () => {
+      const seconds = Math.round((Date.now() - startTime) / 1000);
+      if (window.gtag) {
+        window.gtag('event', 'time_on_page', {
+          seconds,
+          page: window.location.pathname,
+        });
+      }
+    };
+    window.addEventListener('beforeunload', handleUnload);
+    return () => window.removeEventListener('beforeunload', handleUnload);
   }, []);
 
   return (
