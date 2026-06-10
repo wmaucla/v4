@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import sr from '@utils/sr';
 import { srConfig } from '@config';
 import { usePrefersReducedMotion } from '@hooks';
+import { trackClick } from '@utils';
 
 const StyledText = styled.div`
   ul.skills-list {
@@ -61,13 +62,33 @@ const Featured = () => {
           </p>
           <p>
             I've completed courses on{' '}
-            <a href="https://www.linkedin.com/in/williammaucla/">LinkedIn Learning and Coursera</a>.
-            Also check out my{' '}
-            <a href="https://www.oreilly.com/playlists/c666e77c-45f7-4275-8678-ce03f0aa1960/">
+            <a
+              href="https://www.linkedin.com/in/williammaucla/"
+              onClick={() =>
+                trackClick('about_linkedin_learning', 'https://www.linkedin.com/in/williammaucla/')
+              }>
+              LinkedIn Learning and Coursera
+            </a>
+            . Also check out my{' '}
+            <a
+              href="https://www.oreilly.com/playlists/c666e77c-45f7-4275-8678-ce03f0aa1960/"
+              onClick={() =>
+                trackClick(
+                  'about_oreilly',
+                  'https://www.oreilly.com/playlists/c666e77c-45f7-4275-8678-ce03f0aa1960/',
+                )
+              }>
               O'Reilly account
             </a>{' '}
             for books I'm reading and my{' '}
-            <a href="https://www.zotero.org/groups/2583428/williams_reading_list/library">
+            <a
+              href="https://www.zotero.org/groups/2583428/williams_reading_list/library"
+              onClick={() =>
+                trackClick(
+                  'about_zotero',
+                  'https://www.zotero.org/groups/2583428/williams_reading_list/library',
+                )
+              }>
               Zotero library
             </a>{' '}
             for arXiv papers and research I'm exploring.

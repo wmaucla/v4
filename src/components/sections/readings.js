@@ -3,6 +3,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styled from 'styled-components';
 import { srConfig } from '@config';
 import sr from '@utils/sr';
+import { trackClick } from '@utils';
 import { Icon } from '@components/icons';
 import { usePrefersReducedMotion } from '@hooks';
 
@@ -90,26 +91,25 @@ const Readings = () => {
   const revealProjects = useRef([]);
   const prefersReducedMotion = usePrefersReducedMotion();
   const [apiData, setAPIData] = useState([]);
-  const itemRefs = useRef([]);
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      return;
+    }
 
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Zotero-API-Key': process.env.GATSBY_API_KEY,
+        'Zotero-API-Key': process.env.GATSBY_API_KEY, // yes this is very bad
       },
     };
-    fetch('https://api.zotero.org/groups/2583428/items?limit=5', requestOptions)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Zotero API error: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => setAPIData(data))
-      .catch(err => console.warn('Could not load readings:', err));
-  }, []);
+    fetch('https://api.zotero.org/groups/2583428/items?limit=6', requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        setAPIData(data);
+      });
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -120,35 +120,39 @@ const Readings = () => {
     revealProjects.current.forEach((ref, i) => sr.reveal(ref, srConfig(i * 100)));
   }, []);
 
-  const GRID_LIMIT = 5;
-
-  const getTypeIcon = itemType => {
-    switch (itemType) {
-      case 'journalArticle':
-        return 'Bookmark';
-      case 'blogPost':
-        return 'Star';
-      case 'webpage':
-      default:
-        return 'External';
-    }
-  };
-
   const projectInner = node => {
     const { title, url, itemType } = node;
 
     return (
-      <a href={url} target="_blank" rel="noreferrer" aria-label={title}>
-        <span className="reading-left">
-          <span className="reading-type-icon">
-            <Icon name={getTypeIcon(itemType)} />
-          </span>
-          <span className="reading-title">{title}</span>
-        </span>
-        <span className="external-icon">
-          <Icon name="External" />
-        </span>
-      </a>
+      <div className="readings-inner">
+        <header>
+          <div className="readings-top">
+            <div className="folder">
+              <Icon name="Folder" />
+            </div>
+            <div className="readings-links">
+              {title && (
+                <a
+                  href={url}
+                  aria-label="External Link"
+                  className="external"
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => trackClick(`reading_${title}`, url)}>
+                  <Icon name="External" />
+                </a>
+              )}
+            </div>
+          </div>
+
+          <h3 className="readings-title">{title}</h3>
+
+          <div
+            className="readings-description"
+            dangerouslySetInnerHTML={{ __html: abstractNote }}
+          />
+        </header>
+      </div>
     );
   };
 
@@ -164,39 +168,34 @@ const Readings = () => {
       <p>
         {' '}
         Readings are fetched automatically from{' '}
-        <a href="https://www.zotero.org/groups/2583428/williams_reading_list/library">
+        <a
+          href="https://www.zotero.org/groups/2583428/williams_reading_list/library"
+          onClick={() =>
+            trackClick(
+              'readings_zotero_library',
+              'https://www.zotero.org/groups/2583428/williams_reading_list/library',
+            )
+          }>
           {' '}
           my Zotero library.{' '}
         </a>
       </p>
 
-      <ul className="readings-list">
+      <ul className="projects-grid">
         <TransitionGroup component={null}>
           {apiData &&
-            apiData.map((item, i) => {
-              if (!itemRefs.current[i]) {
-                itemRefs.current[i] = React.createRef();
-              }
-              return (
-                <CSSTransition
+            apiData.map((item, i) => (
+              <CSSTransition key={i} classNames="fadeup" timeout={300} exit={false}>
+                <StyledProject
                   key={i}
-                  nodeRef={itemRefs.current[i]}
-                  classNames="fadeup"
-                  timeout={i >= GRID_LIMIT ? (i - GRID_LIMIT) * 300 : 300}
-                  exit={false}>
-                  <StyledProject
-                    ref={el => {
-                      itemRefs.current[i].current = el;
-                      revealProjects.current[i] = el;
-                    }}
-                    style={{
-                      transition: `all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1) 0s`,
-                    }}>
-                    {projectInner(item.data)}
-                  </StyledProject>
-                </CSSTransition>
-              );
-            })}
+                  ref={el => (revealProjects.current[i] = el)}
+                  style={{
+                    transition: `all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1) 0s;`,
+                  }}>
+                  {projectInner(item.data)}
+                </StyledProject>
+              </CSSTransition>
+            ))}
         </TransitionGroup>
       </ul>
     </StyledProjectsSection>

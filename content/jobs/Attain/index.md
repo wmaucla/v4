@@ -7,8 +7,8 @@ location: 'Remote/New York City'
 range: 'May 2024 - Present'
 ---
 
-I'm currently at Attain, a fintech/adtech startup, where I work on ML engineering and platform initiatives.
+I'm currently at Attain, a fintech/adtech startup, where I lead multiple ML engineering and ML platform initiatives and work on the flagship ML model.
 
-- Drove $20M+ in incremental revenue (80% YoY growth) and tripled underwriting capacity through model development and optimization — the underwriting model is the core revenue engine of the business
+- Powered 40+ models that tripled underwriting capacity - drive 80% YoY growth
 - Built a highly reliable ML platform powering 260M+ real-time underwriting decisions with zero engineering outages
 - Reduced core system complexity by 85% while improving model performance, making the system faster to iterate on

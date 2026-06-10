@@ -23,6 +23,10 @@ module.exports = {
         pluginConfig: {
           head: true,
           respectDNT: true,
+          exclude: [],
+        },
+        gtagConfig: {
+          send_page_view: false,
         },
       },
     },

@@ -4,6 +4,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styled from 'styled-components';
 import { srConfig } from '@config';
 import sr from '@utils/sr';
+import { trackClick } from '@utils';
 import { Icon } from '@components/icons';
 import { usePrefersReducedMotion } from '@hooks';
 
@@ -228,7 +229,12 @@ const Projects = () => {
             </div>
             <div className="project-links">
               {github && (
-                <a href={github} aria-label="GitHub Link" target="_blank" rel="noreferrer">
+                <a
+                  href={github}
+                  aria-label="GitHub Link"
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => trackClick(`project_github_${title}`, github)}>
                   <Icon name="GitHub" />
                 </a>
               )}
@@ -238,7 +244,8 @@ const Projects = () => {
                   aria-label="External Link"
                   className="external"
                   target="_blank"
-                  rel="noreferrer">
+                  rel="noreferrer"
+                  onClick={() => trackClick(`project_external_${title}`, external)}>
                   <Icon name="External" />
                 </a>
               )}
@@ -246,7 +253,11 @@ const Projects = () => {
           </div>
 
           <h3 className="project-title">
-            <a href={external} target="_blank" rel="noreferrer">
+            <a
+              href={external}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => trackClick(`project_title_${title}`, external)}>
               {title}
             </a>
           </h3>

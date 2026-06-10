@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { socialMedia } from '@config';
 import { Side } from '@components';
 import { Icon } from '@components/icons';
+import { trackClick } from '@utils';
 
 const StyledSocialList = styled.ul`
   display: flex;
@@ -49,7 +50,12 @@ const Social = ({ isHome, heroComplete }) => (
       {socialMedia &&
         socialMedia.map(({ url, name }, i) => (
           <li key={i}>
-            <a href={url} aria-label={name} target="_blank" rel="noreferrer">
+            <a
+              href={url}
+              aria-label={name}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => trackClick(`social_${name.toLowerCase()}`, url)}>
               <Icon name={name} />
             </a>
           </li>
