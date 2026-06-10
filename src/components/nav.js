@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styled, { css } from 'styled-components';
 import { navLinks } from '@config';
-import { loaderDelay } from '@utils';
+import { loaderDelay, trackClick } from '@utils';
 import { useScrollDirection, usePrefersReducedMotion } from '@hooks';
 import { Menu } from '@components';
 import { IconLogo } from '@components/icons';
@@ -173,7 +173,12 @@ const Nav = ({ isHome }) => {
   );
 
   const ResumeLink = (
-    <a className="resume-button" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+    <a
+      className="resume-button"
+      href="/resume.pdf"
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={() => trackClick('resume', '/resume.pdf')}>
       Resume
     </a>
   );

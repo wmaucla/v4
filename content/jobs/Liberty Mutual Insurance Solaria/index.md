@@ -7,7 +7,7 @@ range: 'Nov 2017 - Jul 2019'
 url: 'https://www.solarialabs.com/'
 ---
 
-I worked for Solaria Labs, the innovation arm of Liberty Mutual, building ML solutions around alternative data.
+I started working in data science at Solaria Labs, the innovation arm of Liberty Mutual, building ML solutions around alternative data.
 
-- Built investment signals using telematics data at scale, partnering with the investments team to quantify driver behavior's impact on financial risk
+- Built investment signals using telematics data at scale, partnering with the internal investments team (see my projects down below)
 - Developed a driver risk prediction model using large-scale data and experimentation, improving underwriting decisions
