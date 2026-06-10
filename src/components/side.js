@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styled from 'styled-components';
-import { loaderDelay } from '@utils';
 import { usePrefersReducedMotion } from '@hooks';
 
 const StyledSideElement = styled.div`
@@ -24,17 +23,19 @@ const StyledSideElement = styled.div`
   }
 `;
 
-const Side = ({ children, isHome, orientation }) => {
+const Side = ({ children, isHome, orientation, heroComplete }) => {
   const [isMounted, setIsMounted] = useState(!isHome);
   const prefersReducedMotion = usePrefersReducedMotion();
+  const nodeRef = useRef(null);
 
   useEffect(() => {
     if (!isHome || prefersReducedMotion) {
       return;
     }
-    const timeout = setTimeout(() => setIsMounted(true), loaderDelay);
-    return () => clearTimeout(timeout);
-  }, []);
+    if (heroComplete) {
+      setIsMounted(true);
+    }
+  }, [heroComplete]);
 
   return (
     <StyledSideElement orientation={orientation}>
@@ -43,8 +44,11 @@ const Side = ({ children, isHome, orientation }) => {
       ) : (
         <TransitionGroup component={null}>
           {isMounted && (
-            <CSSTransition classNames={isHome ? 'fade' : ''} timeout={isHome ? loaderDelay : 0}>
-              {children}
+            <CSSTransition
+              nodeRef={nodeRef}
+              classNames={isHome ? 'fade' : ''}
+              timeout={isHome ? 2000 : 0}>
+              <div ref={nodeRef}>{children}</div>
             </CSSTransition>
           )}
         </TransitionGroup>
@@ -57,6 +61,7 @@ Side.propTypes = {
   children: PropTypes.node.isRequired,
   isHome: PropTypes.bool,
   orientation: PropTypes.string,
+  heroComplete: PropTypes.bool,
 };
 
 export default Side;

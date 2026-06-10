@@ -1,28 +1,61 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  IconAirflow,
   IconAppStore,
+  IconAWS,
   IconBookmark,
   IconCodepen,
+  IconDocker,
   IconEmail,
+  IconGCP,
+  IconKafka,
   IconExternal,
   IconFolder,
   IconFork,
   IconGitHub,
   IconInstagram,
+  IconKubernetes,
   IconLinkedin,
   IconLoader,
   IconLogo,
   IconPlayStore,
+  IconPython,
+  IconPyTorch,
+  IconRust,
+  IconSpark,
   IconStar,
+  IconTerraform,
   IconTwitter,
   IconZotero,
 } from '@components/icons';
 
 const Icon = ({ name }) => {
   switch (name) {
+    case 'Airflow':
+      return <IconAirflow />;
     case 'AppStore':
       return <IconAppStore />;
+    case 'AWS':
+      return <IconAWS />;
+    case 'Docker':
+      return <IconDocker />;
+    case 'GCP':
+      return <IconGCP />;
+    case 'Kafka':
+      return <IconKafka />;
+    case 'Kubernetes':
+      return <IconKubernetes />;
+    case 'Python':
+      return <IconPython />;
+    case 'PyTorch':
+      return <IconPyTorch />;
+    case 'Rust':
+      return <IconRust />;
+    case 'Spark':
+      return <IconSpark />;
+    case 'Terraform':
+      return <IconTerraform />;
     case 'Bookmark':
       return <IconBookmark />;
     case 'Codepen':

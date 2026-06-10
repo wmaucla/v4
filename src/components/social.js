@@ -44,8 +44,8 @@ const StyledSocialList = styled.ul`
   }
 `;
 
-const Social = ({ isHome }) => (
-  <Side isHome={isHome} orientation="left">
+const Social = ({ isHome, heroComplete }) => (
+  <Side isHome={isHome} orientation="left" heroComplete={heroComplete}>
     <StyledSocialList>
       {socialMedia &&
         socialMedia.map(({ url, name }, i) => (
@@ -66,6 +66,7 @@ const Social = ({ isHome }) => (
 
 Social.propTypes = {
   isHome: PropTypes.bool,
+  heroComplete: PropTypes.bool,
 };
 
 export default Social;

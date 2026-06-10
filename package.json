@@ -14,7 +14,7 @@
   "browserslist": "> 0.25%, not dead",
   "scripts": {
     "build": "gatsby build",
-    "develop": "gatsby develop",
+    "develop": "NODE_OPTIONS=--no-deprecation gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
@@ -57,7 +57,7 @@
     "react-dom": "^18.3.1",
     "react-helmet": "^6.1.0",
     "react-is": "^19.2.7",
-    "react-transition-group": "^4.3.0",
+    "react-transition-group": "^4.4.5",
     "scrollreveal": "^4.0.5",
     "styled-components": "^5.3.0"
   },

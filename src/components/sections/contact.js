@@ -35,9 +35,20 @@ const StyledContactSection = styled.section`
     font-size: clamp(40px, 5vw, 60px);
   }
 
+  .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 50px;
+  }
+
   .email-link {
     ${({ theme }) => theme.mixins.bigButton};
-    margin-top: 50px;
+  }
+
+  .linkedin-link {
+    ${({ theme }) => theme.mixins.bigButton};
   }
 `;
 
@@ -61,9 +72,22 @@ const Contact = () => {
         Please reach out if you're interested in my work! Or if you just want to chat, you deserve
         the chance - after all, you've made it all the way!
       </p>
-      <a className="email-link" href={`mailto:${email}`}>
-        Say Hello!
-      </a>
+      <div className="button-group">
+        <a
+          className="email-link"
+          href={`mailto:${email}`}
+          onClick={() => window.gtag && window.gtag('event', 'cta_click', { cta: 'email' })}>
+          Say Hello!
+        </a>
+        <a
+          className="linkedin-link"
+          href="https://www.linkedin.com/in/williammaucla"
+          target="_blank"
+          rel="noreferrer"
+          onClick={() => window.gtag && window.gtag('event', 'cta_click', { cta: 'linkedin' })}>
+          LinkedIn
+        </a>
+      </div>
     </StyledContactSection>
   );
 };

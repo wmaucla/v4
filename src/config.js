@@ -3,20 +3,16 @@ module.exports = {
 
   socialMedia: [
     {
+      name: 'Email',
+      url: 'mailto:williammaucla@gmail.com',
+    },
+    {
+      name: 'Linkedin',
+      url: 'https://www.linkedin.com/in/williammaucla',
+    },
+    {
       name: 'GitHub',
       url: 'https://github.com/wmaucla',
-    },
-    {
-      name: 'LinkedIn',
-      url: 'https://www.linkedin.com/in/wmaucla',
-    },
-    {
-      name: 'Zotero',
-      url: 'https://www.zotero.org/groups/2583428/williams_reading_list/library',
-    },
-    {
-      name: 'Email',
-      url: 'williammaucla@gmail.com',
     },
   ],
 
