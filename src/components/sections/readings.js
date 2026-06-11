@@ -132,33 +132,24 @@ const Readings = () => {
   }, []);
 
   const projectInner = node => {
-    const { title, url } = node;
+    const { title, url, itemType } = node;
 
     return (
-      <div className="readings-inner">
-        <header>
-          <div className="readings-top">
-            <div className="folder">
-              <Icon name="Folder" />
-            </div>
-            <div className="readings-links">
-              {title && (
-                <a
-                  href={url}
-                  aria-label="External Link"
-                  className="external"
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => trackClick(`reading_${title}`, url)}>
-                  <Icon name="External" />
-                </a>
-              )}
-            </div>
-          </div>
-
-          <h3 className="readings-title">{title}</h3>
-        </header>
-      </div>
+      <a
+        href={url}
+        target="_blank"
+        rel="noreferrer"
+        onClick={() => trackClick(`reading_${title}`, url)}>
+        <div className="reading-left">
+          <span className="reading-type-icon">
+            <Icon name={itemType === 'journalArticle' ? 'External' : 'Bookmark'} />
+          </span>
+          <span className="reading-title">{title}</span>
+        </div>
+        <span className="external-icon">
+          <Icon name="External" />
+        </span>
+      </a>
     );
   };
 
@@ -180,7 +171,7 @@ const Readings = () => {
         </a>
       </p>
 
-      <ul className="projects-grid">
+      <ul className="readings-list">
         <TransitionGroup component={null}>
           {apiData &&
             apiData.map((item, i) => (
