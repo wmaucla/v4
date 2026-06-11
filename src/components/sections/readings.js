@@ -1,11 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import styled from 'styled-components';
-import { srConfig } from '@config';
 import sr from '@utils/sr';
 import { trackClick } from '@utils';
 import { Icon } from '@components/icons';
 import { usePrefersReducedMotion } from '@hooks';
+
+const srReveal = (delay = 200) => ({
+  origin: 'bottom',
+  distance: '20px',
+  duration: 500,
+  delay,
+  rotate: { x: 0, y: 0, z: 0 },
+  opacity: 0,
+  scale: 1,
+  easing: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
+  mobile: true,
+  reset: false,
+  useDelay: 'always',
+  viewFactor: 0.25,
+  viewOffset: { top: 0, right: 0, bottom: 0, left: 0 },
+});
 
 const StyledProjectsSection = styled.section`
   display: flex;
@@ -93,11 +108,6 @@ const Readings = () => {
   const [apiData, setAPIData] = useState([]);
 
   useEffect(() => {
-    if (prefersReducedMotion) {
-      return;
-    }
-
-  useEffect(() => {
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -110,18 +120,19 @@ const Readings = () => {
       .then(data => {
         setAPIData(data);
       });
+  }, []);
 
   useEffect(() => {
     if (prefersReducedMotion) {
       return;
     }
-    sr.reveal(revealTitle.current, srConfig());
-    sr.reveal(revealArchiveLink.current, srConfig());
-    revealProjects.current.forEach((ref, i) => sr.reveal(ref, srConfig(i * 100)));
+    sr.reveal(revealTitle.current, srReveal());
+    sr.reveal(revealArchiveLink.current, srReveal());
+    revealProjects.current.forEach((ref, i) => sr.reveal(ref, srReveal(i * 100)));
   }, []);
 
   const projectInner = node => {
-    const { title, url, itemType } = node;
+    const { title, url } = node;
 
     return (
       <div className="readings-inner">
@@ -146,11 +157,6 @@ const Readings = () => {
           </div>
 
           <h3 className="readings-title">{title}</h3>
-
-          <div
-            className="readings-description"
-            dangerouslySetInnerHTML={{ __html: abstractNote }}
-          />
         </header>
       </div>
     );
@@ -159,14 +165,8 @@ const Readings = () => {
   return (
     <StyledProjectsSection>
       <h2 ref={revealTitle}> Current Readings </h2>
-      {/*
-      <Link className="inline-link archive-link" to="/archive" ref={revealArchiveLink}>
-        view the archive
-      </Link>
-      */}
 
       <p>
-        {' '}
         Readings are fetched automatically from{' '}
         <a
           href="https://www.zotero.org/groups/2583428/williams_reading_list/library"
@@ -176,8 +176,7 @@ const Readings = () => {
               'https://www.zotero.org/groups/2583428/williams_reading_list/library',
             )
           }>
-          {' '}
-          my Zotero library.{' '}
+          my Zotero library.
         </a>
       </p>
 
