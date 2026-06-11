@@ -161,7 +161,7 @@ const Jobs = () => {
             return (
               <StyledJobItem key={i}>
                 <div className="date">
-                  {range.includes(' - ') ? (
+                  {range && range.includes(' - ') ? (
                     <>
                       {range.split(' - ')[0]} -<br />
                       {range.split(' - ')[1]}
