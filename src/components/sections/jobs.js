@@ -27,8 +27,8 @@ const StyledJobItem = styled.div`
 
   @media (prefers-reduced-motion: no-preference) {
     &:hover {
-      background-color: rgba(100, 200, 150, 0.05);
-      transform: translateX(10px);
+      background-color: var(--light-navy);
+      box-shadow: inset 0 0 0 1px var(--lightest-navy);
     }
   }
 
@@ -118,14 +118,13 @@ const Jobs = () => {
     query {
       jobs: allMarkdownRemark(
         filter: { fileAbsolutePath: { regex: "/jobs/" } }
-        sort: { fields: [frontmatter___date], order: DESC }
+        sort: { frontmatter: { date: DESC } }
       ) {
         edges {
           node {
             frontmatter {
               title
               company
-              location
               range
               url
             }

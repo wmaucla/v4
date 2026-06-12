@@ -1,6 +1,7 @@
 ---
 date: '2023-12-13'
 title: 'Personal Website'
+weight: 2
 github: 'https://github.com/wmaucla/v4'
 external: ''
 tech:

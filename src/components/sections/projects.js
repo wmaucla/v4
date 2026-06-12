@@ -13,18 +13,6 @@ const StyledProjectsSection = styled.section`
   flex-direction: column;
   align-items: center;
 
-  h2 {
-    font-size: clamp(24px, 5vw, var(--fz-heading));
-  }
-
-  .archive-link {
-    font-family: var(--font-mono);
-    font-size: var(--fz-sm);
-    &:after {
-      bottom: 0.1em;
-    }
-  }
-
   .projects-grid {
     ${({ theme }) => theme.mixins.resetList};
     display: grid;
@@ -177,7 +165,7 @@ const Projects = () => {
           fileAbsolutePath: { regex: "/projects/" }
           frontmatter: { showInProjects: { ne: false } }
         }
-        sort: { fields: [frontmatter___date], order: DESC }
+        sort: { frontmatter: { date: DESC } }
       ) {
         edges {
           node {
@@ -186,6 +174,7 @@ const Projects = () => {
               tech
               github
               external
+              weight
             }
             html
           }
@@ -196,7 +185,6 @@ const Projects = () => {
 
   const [showMore, setShowMore] = useState(false);
   const revealTitle = useRef(null);
-  const revealArchiveLink = useRef(null);
   const revealProjects = useRef([]);
   const projectRefs = useRef([]);
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -207,12 +195,20 @@ const Projects = () => {
     }
 
     sr.reveal(revealTitle.current, srConfig());
-    sr.reveal(revealArchiveLink.current, srConfig());
     revealProjects.current.forEach((ref, i) => sr.reveal(ref, srConfig(i * 100)));
   }, []);
 
   const GRID_LIMIT = 6;
-  const projects = data.projects.edges.filter(({ node }) => node);
+  // Pin projects via frontmatter weight: low = first, high = last,
+  // unweighted stay in date order (query is date DESC, sort is stable)
+  const DEFAULT_WEIGHT = 50;
+  const projects = data.projects.edges
+    .filter(({ node }) => node)
+    .sort(
+      (a, b) =>
+        (a.node.frontmatter.weight ?? DEFAULT_WEIGHT) -
+        (b.node.frontmatter.weight ?? DEFAULT_WEIGHT),
+    );
   const firstSix = projects.slice(0, GRID_LIMIT);
   const projectsToShow = showMore ? projects : firstSix;
 
@@ -279,15 +275,10 @@ const Projects = () => {
   };
 
   return (
-    <StyledProjectsSection>
-      <h2 ref={revealTitle}>Personal Projects</h2>
-
-      {/*
-
-      <Link className="inline-link archive-link" to="/archive" ref={revealArchiveLink}>
-        view the archive
-      </Link>
-      */}
+    <StyledProjectsSection id="projects">
+      <h2 className="numbered-heading" ref={revealTitle}>
+        Personal Projects
+      </h2>
 
       <ul className="projects-grid">
         {prefersReducedMotion ? (

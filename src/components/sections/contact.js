@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { srConfig, email } from '@config';
 import sr from '@utils/sr';
+import { trackClick } from '@utils';
 import { usePrefersReducedMotion } from '@hooks';
 
 const StyledContactSection = styled.section`
@@ -43,11 +44,7 @@ const StyledContactSection = styled.section`
     margin-top: 50px;
   }
 
-  .email-link {
-    ${({ theme }) => theme.mixins.bigButton};
-  }
-
-  .linkedin-link {
+  .cta-link {
     ${({ theme }) => theme.mixins.bigButton};
   }
 `;
@@ -74,17 +71,19 @@ const Contact = () => {
       </p>
       <div className="button-group">
         <a
-          className="email-link"
+          className="cta-link"
           href={`mailto:${email}`}
-          onClick={() => window.gtag && window.gtag('event', 'cta_click', { cta: 'email' })}>
+          onClick={() => trackClick('contact_email', `mailto:${email}`)}>
           Say Hello!
         </a>
         <a
-          className="linkedin-link"
+          className="cta-link"
           href="https://www.linkedin.com/in/williammaucla"
           target="_blank"
           rel="noreferrer"
-          onClick={() => window.gtag && window.gtag('event', 'cta_click', { cta: 'linkedin' })}>
+          onClick={() =>
+            trackClick('contact_linkedin', 'https://www.linkedin.com/in/williammaucla')
+          }>
           LinkedIn
         </a>
       </div>

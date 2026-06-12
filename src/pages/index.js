@@ -1,21 +1,11 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
-
-// useLayoutEffect runs synchronously before paint — eliminates hydration flash.
-// Falls back to useEffect on the server (where window doesn't exist).
-const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {
-  Layout,
-  Hero,
-  About,
-  Jobs,
-  Featured,
-  Projects,
-  Stack,
-  Contact,
-  Readings,
-} from '@components';
+import { usePageAnalytics } from '@hooks';
+import { Layout, Hero, About, Jobs, Projects, Stack, Contact, Readings } from '@components';
+
+/* ── Snapped sidebar layout (disabled for now — restore by swapping the JSX below) ──
+import { useIsomorphicLayoutEffect } from '@hooks';
 
 const SNAPPED_WIDTH = '220px';
 const SNAPPED_PERCENT = '22%';
@@ -29,17 +19,19 @@ const StyledFixedHero = styled.div`
   z-index: 4;
   display: flex;
   align-items: center;
+  // Center the hero content within the snapped column so it doesn't hug the viewport edge
+  justify-content: ${({ $snapped }) => ($snapped ? 'center' : 'flex-start')};
   background-color: var(--navy);
   overflow: hidden;
 
   width: ${({ $snapped }) => ($snapped ? SNAPPED_LEFT_WIDTH : '100%')};
   min-width: ${({ $snapped }) => ($snapped ? SNAPPED_WIDTH : 'unset')};
-  padding: ${({ $snapped }) => ($snapped ? '0 20px 0 50px' : '0 150px')};
+  padding: ${({ $snapped }) => ($snapped ? '0 24px' : '0 150px')};
   transition: width 0.7s cubic-bezier(0.645, 0.045, 0.355, 1),
     padding 0.7s cubic-bezier(0.645, 0.045, 0.355, 1);
 
   @media (max-width: 1080px) {
-    padding: ${({ $snapped }) => ($snapped ? '0 14px 0 32px' : '0 100px')};
+    padding: ${({ $snapped }) => ($snapped ? '0 16px' : '0 100px')};
   }
 
   @media (max-width: 768px) {
@@ -73,16 +65,23 @@ const StyledRightPanel = styled.main`
     padding-left: 25px;
   }
 `;
+── end snapped layout ── */
+
+const StyledMainContainer = styled.main`
+  counter-reset: section;
+`;
 
 const IndexPage = ({ location }) => {
   const [heroComplete, setHeroComplete] = useState(false);
-  const [snapped, setSnapped] = useState(
-    typeof window !== 'undefined' && window.scrollY > window.innerHeight * 0.3,
-  );
 
   const handleButtonsShow = () => {
     setHeroComplete(true);
   };
+
+  /* ── Snap-on-scroll state (disabled along with the layout above) ──
+  const [snapped, setSnapped] = useState(
+    typeof window !== 'undefined' && window.scrollY > window.innerHeight * 0.3,
+  );
 
   useIsomorphicLayoutEffect(() => {
     const handleScroll = () => {
@@ -100,102 +99,33 @@ const IndexPage = ({ location }) => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  ── end snap-on-scroll state ── */
 
-  // ── GA4 Tracking ──────────────────────────────────────────────────────────
-
-  // 1. Scroll depth milestones (25 / 50 / 75 / 100%)
-  useEffect(() => {
-    const milestones = [25, 50, 75, 100];
-    const fired = new Set();
-
-    const handleScrollDepth = () => {
-      const scrollable = document.body.scrollHeight - window.innerHeight;
-      if (scrollable <= 0) {
-        return;
-      }
-      const pct = Math.round((window.scrollY / scrollable) * 100);
-      milestones.forEach(m => {
-        if (pct >= m && !fired.has(m)) {
-          fired.add(m);
-          if (window.gtag) {
-            window.gtag('event', 'scroll_depth', {
-              depth_percent: m,
-              page: window.location.pathname,
-            });
-          }
-        }
-      });
-    };
-
-    window.addEventListener('scroll', handleScrollDepth, { passive: true });
-    return () => window.removeEventListener('scroll', handleScrollDepth);
-  }, []);
-
-  // 2. Section visibility tracking via IntersectionObserver
-  useEffect(() => {
-    const sections = ['about', 'jobs', 'projects', 'stack', 'readings', 'contact'];
-    const observers = [];
-
-    sections.forEach(id => {
-      const el = document.getElementById(id);
-      if (!el) {
-        return;
-      }
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting && window.gtag) {
-            window.gtag('event', 'section_viewed', {
-              section: id,
-              page: window.location.pathname,
-            });
-            // Only fire once per section per visit
-            observer.disconnect();
-          }
-        },
-        { threshold: 0.3 },
-      );
-      observer.observe(el);
-      observers.push(observer);
-    });
-
-    return () => observers.forEach(o => o.disconnect());
-  }, []);
-
-  // 3. Time on page before leaving
-  useEffect(() => {
-    const startTime = Date.now();
-    const handleUnload = () => {
-      const seconds = Math.round((Date.now() - startTime) / 1000);
-      if (window.gtag) {
-        window.gtag('event', 'time_on_page', {
-          seconds,
-          page: window.location.pathname,
-        });
-      }
-    };
-    window.addEventListener('beforeunload', handleUnload);
-    return () => window.removeEventListener('beforeunload', handleUnload);
-  }, []);
+  usePageAnalytics(['about', 'jobs', 'projects', 'stack', 'readings', 'contact']);
 
   return (
     <Layout location={location} heroComplete={heroComplete}>
-      {/* Fixed hero: transitions from full-screen to left 28% slot */}
+      {/* ── Snapped sidebar JSX (disabled) ──
       <StyledFixedHero $snapped={snapped}>
         <Hero onButtonsShow={handleButtonsShow} snapped={snapped} />
       </StyledFixedHero>
 
-      {/* Right panel always in normal flow — creates page scroll height */}
       <StyledContent>
         <StyledRightPanel>
-          <About />
-          <Jobs />
-          <Featured />
-          <Projects />
-          <Stack />
-          <Readings />
-          <Contact />
+          ...sections...
         </StyledRightPanel>
       </StyledContent>
+      ── end snapped sidebar JSX ── */}
+
+      <StyledMainContainer className="fillHeight">
+        <Hero onButtonsShow={handleButtonsShow} snapped={false} />
+        <About />
+        <Jobs />
+        <Projects />
+        <Stack />
+        <Readings />
+        <Contact />
+      </StyledMainContainer>
     </Layout>
   );
 };

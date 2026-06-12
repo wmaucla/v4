@@ -85,35 +85,6 @@ const StyledPic = styled.div`
   }
 `;
 
-const StyledText = styled.div`
-  ul.skills-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(140px, 200px));
-    grid-gap: 0 10px;
-    padding: 0;
-    margin: 20px 0 0 0;
-    overflow: hidden;
-    list-style: none;
-
-    li {
-      position: relative;
-      margin-bottom: 10px;
-      padding-left: 20px;
-      font-family: var(--font-mono);
-      font-size: var(--fz-xs);
-
-      &:before {
-        content: '▹';
-        position: absolute;
-        left: 0;
-        color: var(--green);
-        font-size: var(--fz-sm);
-        line-height: 12px;
-      }
-    }
-  }
-`;
-
 const About = () => {
   const revealContainer = useRef(null);
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -131,24 +102,21 @@ const About = () => {
       <h2 className="numbered-heading">About Me</h2>
 
       <div className="inner">
-        <StyledText>
-          <div>
-            <p>I currently live and work remotely near NYC.</p>
-            <p>
-              I'm a machine learning engineering leader focused on scaling ML systems that deliver
-              real business impact, having built enterprise-grade platforms that generate tens of
-              millions in revenue and power hundreds of millions of real-time decisions in
-              production.
-            </p>
-            <p>
-              When I'm not working or{' '}
-              <a href="https://github.com/wmaucla" target="_blank" rel="noreferrer">
-                tinkering
-              </a>
-              , I love to travel and learn new things.
-            </p>
-          </div>
-        </StyledText>
+        <div>
+          <p>I currently live and work remotely near NYC.</p>
+          <p>
+            I'm a machine learning engineering leader focused on scaling ML systems that deliver
+            real business impact, having built enterprise-grade platforms that generate tens of
+            millions in revenue and power hundreds of millions of real-time decisions in production.
+          </p>
+          <p>
+            When I'm not working or{' '}
+            <a href="https://github.com/wmaucla" target="_blank" rel="noreferrer">
+              tinkering
+            </a>
+            , I love to travel and learn new things.
+          </p>
+        </div>
         <StyledPic>
           <div className="wrapper">
             <StaticImage
