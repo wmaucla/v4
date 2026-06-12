@@ -21,11 +21,6 @@ const StyledStackSection = styled.section`
   flex-direction: column;
   align-items: center;
 
-  h2 {
-    font-size: clamp(24px, 5vw, var(--fz-heading));
-    margin-bottom: 10px;
-  }
-
   .subtitle {
     color: var(--slate);
     font-family: var(--font-mono);
@@ -86,14 +81,18 @@ const Stack = () => {
   const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
-    if (prefersReducedMotion) {return;}
+    if (prefersReducedMotion) {
+      return;
+    }
     sr.reveal(revealTitle.current, srConfig());
     sr.reveal(revealContainer.current, srConfig(100));
   }, []);
 
   return (
-    <StyledStackSection>
-      <h2 ref={revealTitle}>Under the Hood</h2>
+    <StyledStackSection id="stack">
+      <h2 className="numbered-heading" ref={revealTitle}>
+        Under the Hood
+      </h2>
       <p className="subtitle">tools &amp; tech I work with</p>
 
       <div className="tools-grid" ref={revealContainer}>

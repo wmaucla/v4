@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const StyledFooter = styled.footer`
@@ -20,36 +19,16 @@ const StyledCredit = styled.div`
   a {
     padding: 10px;
   }
-
-  .github-stats {
-    margin-top: 10px;
-
-    & > span {
-      display: inline-flex;
-      align-items: center;
-      margin: 0 7px;
-    }
-    svg {
-      display: inline-block;
-      margin-right: 5px;
-      width: 14px;
-      height: 14px;
-    }
-  }
 `;
 
 const Footer = () => (
   <StyledFooter>
-    <StyledCredit tabindex="-1">
+    <StyledCredit tabIndex="-1">
       <a href="https://github.com/bchiang7/v4">
         <div>Webpage based on template created by Brittany Chiang - please check out her site!</div>
       </a>
     </StyledCredit>
   </StyledFooter>
 );
-
-Footer.propTypes = {
-  githubInfo: PropTypes.object,
-};
 
 export default Footer;

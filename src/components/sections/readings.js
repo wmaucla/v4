@@ -22,14 +22,10 @@ const srReveal = (delay = 200) => ({
   viewOffset: { top: 0, right: 0, bottom: 0, left: 0 },
 });
 
-const StyledProjectsSection = styled.section`
+const StyledReadingsSection = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  h2 {
-    font-size: clamp(24px, 5vw, var(--fz-heading));
-  }
 
   .readings-list {
     ${({ theme }) => theme.mixins.resetList};
@@ -102,7 +98,6 @@ const StyledProject = styled.li`
 
 const Readings = () => {
   const revealTitle = useRef(null);
-  const revealArchiveLink = useRef(null);
   const revealProjects = useRef([]);
   const prefersReducedMotion = usePrefersReducedMotion();
   const [apiData, setAPIData] = useState([]);
@@ -118,8 +113,12 @@ const Readings = () => {
     fetch('https://api.zotero.org/groups/2583428/items?limit=6', requestOptions)
       .then(response => response.json())
       .then(data => {
-        setAPIData(data);
-      });
+        // Zotero returns an error object (not an array) on bad requests
+        if (Array.isArray(data)) {
+          setAPIData(data);
+        }
+      })
+      .catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -127,7 +126,6 @@ const Readings = () => {
       return;
     }
     sr.reveal(revealTitle.current, srReveal());
-    sr.reveal(revealArchiveLink.current, srReveal());
     revealProjects.current.forEach((ref, i) => sr.reveal(ref, srReveal(i * 100)));
   }, []);
 
@@ -154,8 +152,10 @@ const Readings = () => {
   };
 
   return (
-    <StyledProjectsSection>
-      <h2 ref={revealTitle}> Current Readings </h2>
+    <StyledReadingsSection id="readings">
+      <h2 className="numbered-heading" ref={revealTitle}>
+        Current Readings
+      </h2>
 
       <p>
         Readings are fetched automatically from{' '}
@@ -188,7 +188,7 @@ const Readings = () => {
             ))}
         </TransitionGroup>
       </ul>
-    </StyledProjectsSection>
+    </StyledReadingsSection>
   );
 };
 

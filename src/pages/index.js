@@ -1,10 +1,7 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
-
-// useLayoutEffect runs synchronously before paint — eliminates hydration flash.
-// Falls back to useEffect on the server (where window doesn't exist).
-const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useIsomorphicLayoutEffect, usePageAnalytics } from '@hooks';
 import {
   Layout,
   Hero,
@@ -101,81 +98,7 @@ const IndexPage = ({ location }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // ── GA4 Tracking ──────────────────────────────────────────────────────────
-
-  // 1. Scroll depth milestones (25 / 50 / 75 / 100%)
-  useEffect(() => {
-    const milestones = [25, 50, 75, 100];
-    const fired = new Set();
-
-    const handleScrollDepth = () => {
-      const scrollable = document.body.scrollHeight - window.innerHeight;
-      if (scrollable <= 0) {
-        return;
-      }
-      const pct = Math.round((window.scrollY / scrollable) * 100);
-      milestones.forEach(m => {
-        if (pct >= m && !fired.has(m)) {
-          fired.add(m);
-          if (window.gtag) {
-            window.gtag('event', 'scroll_depth', {
-              depth_percent: m,
-              page: window.location.pathname,
-            });
-          }
-        }
-      });
-    };
-
-    window.addEventListener('scroll', handleScrollDepth, { passive: true });
-    return () => window.removeEventListener('scroll', handleScrollDepth);
-  }, []);
-
-  // 2. Section visibility tracking via IntersectionObserver
-  useEffect(() => {
-    const sections = ['about', 'jobs', 'projects', 'stack', 'readings', 'contact'];
-    const observers = [];
-
-    sections.forEach(id => {
-      const el = document.getElementById(id);
-      if (!el) {
-        return;
-      }
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting && window.gtag) {
-            window.gtag('event', 'section_viewed', {
-              section: id,
-              page: window.location.pathname,
-            });
-            // Only fire once per section per visit
-            observer.disconnect();
-          }
-        },
-        { threshold: 0.3 },
-      );
-      observer.observe(el);
-      observers.push(observer);
-    });
-
-    return () => observers.forEach(o => o.disconnect());
-  }, []);
-
-  // 3. Time on page before leaving
-  useEffect(() => {
-    const startTime = Date.now();
-    const handleUnload = () => {
-      const seconds = Math.round((Date.now() - startTime) / 1000);
-      if (window.gtag) {
-        window.gtag('event', 'time_on_page', {
-          seconds,
-          page: window.location.pathname,
-        });
-      }
-    };
-    window.addEventListener('beforeunload', handleUnload);
-    return () => window.removeEventListener('beforeunload', handleUnload);
-  }, []);
+  usePageAnalytics(['about', 'jobs', 'projects', 'stack', 'readings', 'contact']);
 
   return (
     <Layout location={location} heroComplete={heroComplete}>
