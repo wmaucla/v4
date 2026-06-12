@@ -1,18 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useIsomorphicLayoutEffect, usePageAnalytics } from '@hooks';
-import {
-  Layout,
-  Hero,
-  About,
-  Jobs,
-  Featured,
-  Projects,
-  Stack,
-  Contact,
-  Readings,
-} from '@components';
+import { usePageAnalytics } from '@hooks';
+import { Layout, Hero, About, Jobs, Projects, Stack, Contact, Readings } from '@components';
+
+/* ── Snapped sidebar layout (disabled for now — restore by swapping the JSX below) ──
+import { useIsomorphicLayoutEffect } from '@hooks';
 
 const SNAPPED_WIDTH = '220px';
 const SNAPPED_PERCENT = '22%';
@@ -26,7 +19,7 @@ const StyledFixedHero = styled.div`
   z-index: 4;
   display: flex;
   align-items: center;
-  /* Center the hero content within the snapped column so it doesn't hug the viewport edge */
+  // Center the hero content within the snapped column so it doesn't hug the viewport edge
   justify-content: ${({ $snapped }) => ($snapped ? 'center' : 'flex-start')};
   background-color: var(--navy);
   overflow: hidden;
@@ -72,16 +65,23 @@ const StyledRightPanel = styled.main`
     padding-left: 25px;
   }
 `;
+── end snapped layout ── */
+
+const StyledMainContainer = styled.main`
+  counter-reset: section;
+`;
 
 const IndexPage = ({ location }) => {
   const [heroComplete, setHeroComplete] = useState(false);
-  const [snapped, setSnapped] = useState(
-    typeof window !== 'undefined' && window.scrollY > window.innerHeight * 0.3,
-  );
 
   const handleButtonsShow = () => {
     setHeroComplete(true);
   };
+
+  /* ── Snap-on-scroll state (disabled along with the layout above) ──
+  const [snapped, setSnapped] = useState(
+    typeof window !== 'undefined' && window.scrollY > window.innerHeight * 0.3,
+  );
 
   useIsomorphicLayoutEffect(() => {
     const handleScroll = () => {
@@ -99,28 +99,33 @@ const IndexPage = ({ location }) => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+  ── end snap-on-scroll state ── */
 
   usePageAnalytics(['about', 'jobs', 'projects', 'stack', 'readings', 'contact']);
 
   return (
     <Layout location={location} heroComplete={heroComplete}>
-      {/* Fixed hero: transitions from full-screen to left 28% slot */}
+      {/* ── Snapped sidebar JSX (disabled) ──
       <StyledFixedHero $snapped={snapped}>
         <Hero onButtonsShow={handleButtonsShow} snapped={snapped} />
       </StyledFixedHero>
 
-      {/* Right panel always in normal flow — creates page scroll height */}
       <StyledContent>
         <StyledRightPanel>
-          <About />
-          <Jobs />
-          <Featured />
-          <Projects />
-          <Stack />
-          <Readings />
-          <Contact />
+          ...sections...
         </StyledRightPanel>
       </StyledContent>
+      ── end snapped sidebar JSX ── */}
+
+      <StyledMainContainer className="fillHeight">
+        <Hero onButtonsShow={handleButtonsShow} snapped={false} />
+        <About />
+        <Jobs />
+        <Projects />
+        <Stack />
+        <Readings />
+        <Contact />
+      </StyledMainContainer>
     </Layout>
   );
 };

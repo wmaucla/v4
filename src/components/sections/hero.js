@@ -10,7 +10,9 @@ const StyledHeroSection = styled.section`
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
+  min-height: 100vh;
   margin-bottom: 0;
+  padding: 0;
 
   h1 {
     margin: 0 0 30px 4px;

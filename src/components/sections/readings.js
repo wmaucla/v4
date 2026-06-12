@@ -27,6 +27,11 @@ const StyledReadingsSection = styled.section`
   flex-direction: column;
   align-items: center;
 
+  .section-text {
+    width: 100%;
+    max-width: 700px;
+  }
+
   .readings-list {
     ${({ theme }) => theme.mixins.resetList};
     width: 100%;
@@ -154,22 +159,49 @@ const Readings = () => {
   return (
     <StyledReadingsSection id="readings">
       <h2 className="numbered-heading" ref={revealTitle}>
-        Current Readings
+        Learnings &amp; Readings
       </h2>
 
-      <p>
-        Readings are fetched automatically from{' '}
-        <a
-          href="https://www.zotero.org/groups/2583428/williams_reading_list/library"
-          onClick={() =>
-            trackClick(
-              'readings_zotero_library',
-              'https://www.zotero.org/groups/2583428/williams_reading_list/library',
-            )
-          }>
-          my Zotero library.
-        </a>
-      </p>
+      <div className="section-text">
+        <p>
+          I studied actuarial mathematics with minors in statistics and computer science at UCLA.
+          All of my experience in ML, data science, and engineering comes from self-study and
+          genuine curiosity. I'm constantly seeking to learn and grow.
+        </p>
+        <p>
+          I've completed courses on{' '}
+          <a
+            href="https://www.linkedin.com/in/williammaucla/"
+            onClick={() =>
+              trackClick('about_linkedin_learning', 'https://www.linkedin.com/in/williammaucla/')
+            }>
+            LinkedIn Learning and Coursera
+          </a>
+          . Also check out my{' '}
+          <a
+            href="https://www.oreilly.com/playlists/c666e77c-45f7-4275-8678-ce03f0aa1960/"
+            onClick={() =>
+              trackClick(
+                'about_oreilly',
+                'https://www.oreilly.com/playlists/c666e77c-45f7-4275-8678-ce03f0aa1960/',
+              )
+            }>
+            O'Reilly account
+          </a>{' '}
+          for books I'm reading. The readings below are fetched automatically from{' '}
+          <a
+            href="https://www.zotero.org/groups/2583428/williams_reading_list/library"
+            onClick={() =>
+              trackClick(
+                'readings_zotero_library',
+                'https://www.zotero.org/groups/2583428/williams_reading_list/library',
+              )
+            }>
+            my Zotero library
+          </a>{' '}
+          — arXiv papers and research I'm exploring.
+        </p>
+      </div>
 
       <ul className="readings-list">
         <TransitionGroup component={null}>
