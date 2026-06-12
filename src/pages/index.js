@@ -26,17 +26,19 @@ const StyledFixedHero = styled.div`
   z-index: 4;
   display: flex;
   align-items: center;
+  /* Center the hero content within the snapped column so it doesn't hug the viewport edge */
+  justify-content: ${({ $snapped }) => ($snapped ? 'center' : 'flex-start')};
   background-color: var(--navy);
   overflow: hidden;
 
   width: ${({ $snapped }) => ($snapped ? SNAPPED_LEFT_WIDTH : '100%')};
   min-width: ${({ $snapped }) => ($snapped ? SNAPPED_WIDTH : 'unset')};
-  padding: ${({ $snapped }) => ($snapped ? '0 20px 0 50px' : '0 150px')};
+  padding: ${({ $snapped }) => ($snapped ? '0 24px' : '0 150px')};
   transition: width 0.7s cubic-bezier(0.645, 0.045, 0.355, 1),
     padding 0.7s cubic-bezier(0.645, 0.045, 0.355, 1);
 
   @media (max-width: 1080px) {
-    padding: ${({ $snapped }) => ($snapped ? '0 14px 0 32px' : '0 100px')};
+    padding: ${({ $snapped }) => ($snapped ? '0 16px' : '0 100px')};
   }
 
   @media (max-width: 768px) {

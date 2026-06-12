@@ -174,6 +174,7 @@ const Projects = () => {
               tech
               github
               external
+              weight
             }
             html
           }
@@ -198,7 +199,16 @@ const Projects = () => {
   }, []);
 
   const GRID_LIMIT = 6;
-  const projects = data.projects.edges.filter(({ node }) => node);
+  // Pin projects via frontmatter weight: low = first, high = last,
+  // unweighted stay in date order (query is date DESC, sort is stable)
+  const DEFAULT_WEIGHT = 50;
+  const projects = data.projects.edges
+    .filter(({ node }) => node)
+    .sort(
+      (a, b) =>
+        (a.node.frontmatter.weight ?? DEFAULT_WEIGHT) -
+        (b.node.frontmatter.weight ?? DEFAULT_WEIGHT),
+    );
   const firstSix = projects.slice(0, GRID_LIMIT);
   const projectsToShow = showMore ? projects : firstSix;
 

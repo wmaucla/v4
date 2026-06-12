@@ -1,6 +1,7 @@
 ---
 date: '2025-02-20'
 title: 'Will-I-Am GPT'
+weight: 99
 github: 'https://github.com/wmaucla/will-i-am-gpt'
 external: 'https://github.com/wmaucla/will-i-am-gpt'
 tech:
