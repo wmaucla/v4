@@ -4,8 +4,9 @@
     {
       "name": "gatsby-develop",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["gatsby", "develop", "--port", "8000"],
-      "port": 8000
+      "runtimeArgs": ["gatsby", "develop"],
+      "port": 8000,
+      "autoPort": true
     },
     {
       "name": "gatsby-serve",
