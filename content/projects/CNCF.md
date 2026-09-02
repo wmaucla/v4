@@ -8,7 +8,8 @@ tech:
   - OpenTofu
   - Cloud
 company:
-showInProjects: true
+# Hidden for now — flip back to true to re-list this project
+showInProjects: false
 ---
 
 A comprehensive Kubernetes setup using CNCF tools and best practices.

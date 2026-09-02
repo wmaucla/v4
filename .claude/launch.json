@@ -2,6 +2,13 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "gatsby-develop",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["gatsby", "develop"],
+      "port": 8000,
+      "autoPort": true
+    },
+    {
       "name": "gatsby-serve",
       "runtimeExecutable": "npx",
       "runtimeArgs": ["gatsby", "serve", "--port", "9000"],
